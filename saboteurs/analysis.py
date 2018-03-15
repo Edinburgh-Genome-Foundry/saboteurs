@@ -13,8 +13,6 @@ def csv_to_groups_data(csv_path):
 
     https://github.com/Edinburgh-Genome-Foundry/saboteurs/
     """
-
-    https://github.com/Edinburgh-Genome-Foundry/saboteurs
     dataframe = pandas.read_csv(csv_path)
     dataframe.columns = ['id', 'attempts', 'failures', 'members']
     groups_data = OrderedDict([
