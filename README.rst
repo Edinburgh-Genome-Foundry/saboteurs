@@ -31,7 +31,7 @@ You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundr
 Installation
 -------------
 
-You can install Primavera through PIP
+You can install Saboteurs through PIP
 
 .. code::
 
