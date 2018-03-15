@@ -5,15 +5,15 @@
     <br /><br />
     </p>
 
-.. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/Primavera.svg?branch=master
-   :target: https://travis-ci.org/Edinburgh-Genome-Foundry/Primavera
+.. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
+   :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
    :alt: Travis CI build status
 
 Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data.
 
 **Example 1:** assume that a secret organization has a few dozen agents (Anna, Bob, Charlie, etc.). Regularly, the organization puts together a group (Anna and David and Peggy) and sends that group to missions, some of which will be successful, some of which will fail. After a large number of missions, looking at the results of each group, you may ask: are there some agents which tend to lower the chances of success of the groups they are part of ?
 
-With the Saboteurs library, you would first put your data in a spreadsheet ``data.csv`` like `this one <>`_ then run the following script:
+With the Saboteurs library, you would first put your data in a spreadsheet ``data.csv`` like `this one <https://github.com/Edinburgh-Genome-Foundry/saboteurs/blob/master/examples/basic_example/basic_example.csv>`_ then run the following script:
 
 .. code:: python
 
@@ -22,7 +22,7 @@ With the Saboteurs library, you would first put your data in a spreadsheet ``dat
   analysis_results = find_saboteurs(groups_data)
   analysis_report(analysis_results, "report.pdf")
 
-You obtain the following `PDF report <>`_ highlighting which members have a significant negative impact on their groups, and where they appear:
+You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/basic_example/basic_example.pdf>`_ highlighting which members have a significant negative impact on their groups, and where they appear:
 
 .. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/screenshot.png
 
