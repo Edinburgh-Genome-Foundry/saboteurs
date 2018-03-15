@@ -1,0 +1,35 @@
+.logos {
+  margin: 0 auto;
+}
+.logos img {
+  width: 250px;
+  margin: 30px
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  font-size: 14px;
+}
+table.ui.table {
+  width: auto;
+  text-align: center;
+
+}
+
+.significant-stats {
+  text-align: center;
+  float: left;
+  margin-right: 1em !important;
+  margin-top: 0 !important;
+  padding: 0.5em !important;
+}
+.table2 {
+    page-break-before: always;
+}
+
+.table2 th {
+  font-size: 7px;
+}
