@@ -7,6 +7,14 @@ import numpy as np
 from copy import deepcopy
 
 def csv_to_groups_data(csv_path):
+    """Read a CSV to get the data to feed to ``find_saboteurs()``.
+
+    See examples of such a file in the code repository:
+
+    https://github.com/Edinburgh-Genome-Foundry/saboteurs/
+    """
+
+    https://github.com/Edinburgh-Genome-Foundry/saboteurs
     dataframe = pandas.read_csv(csv_path)
     dataframe.columns = ['id', 'attempts', 'failures', 'members']
     groups_data = OrderedDict([
@@ -18,6 +26,18 @@ def csv_to_groups_data(csv_path):
     return groups_data
 
 def find_saboteurs(groups_data, pvalue_threshold=0.1):
+    """Return statistics on possible bad elements in the data.
+
+    Parameters
+    ----------
+    groups_data
+      Result of ``csv_to_groups_data()``
+
+    pvalue_threshold
+      Only failure-associated elements with a p-value below this threshold
+      will be included in the final statistics
+
+    """
     groups_data = deepcopy(groups_data)
     members_sets = [set(group['members']) for group in groups_data.values()]
     all_members = set().union(*members_sets)
@@ -80,6 +100,7 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1):
     regression.fit(data, observed)
     predictions = regression.predict(data)
     zipped = zip(groups_data.values(), observed, predictions)
+
     for group_data, obs, pred in zipped:
         std = binom.std(group_data['attempts'], pred) / group_data['attempts']
         group_data['failure_rate'] = obs
