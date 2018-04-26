@@ -12,6 +12,18 @@ def csv_to_groups_data(csv_path):
     See examples of such a file in the code repository:
 
     https://github.com/Edinburgh-Genome-Foundry/saboteurs/
+
+    Returns
+    -------
+    group_data
+      A dict of the form
+      >>> {"Exp. 1": {
+      >>>      exp_id: "Exp. 1",
+      >>>     attempts: 7,
+      >>>     failures: 10,
+      >>>     members: ["Alice", "Bob"]}
+      >>>  }
+      >>>  "Exp. 2": { etc...
     """
     dataframe = pandas.read_csv(csv_path)
     dataframe.columns = ['id', 'attempts', 'failures', 'members']
@@ -23,7 +35,43 @@ def csv_to_groups_data(csv_path):
         d['members'] = d['members'].split(',')
     return groups_data
 
-def find_saboteurs(groups_data, pvalue_threshold=0.1):
+def find_twins(groups_data, almost_twins_threshold=0.8):
+    groups_members_list = [data["members"] for data in groups_data.values()]
+    all_members = set([
+        member for l in groups_members_list
+        for member in l
+    ])
+    profiles = {
+        member: [member in parts_list for parts_list in groups_members_list]
+        for member in all_members
+    }
+    profiles = {
+        member: profile
+        for member, profile in profiles.items()
+        if min(profile) != max(profile)
+    }
+    all_members = sorted(set(profiles.keys()))
+    twins = {}
+    almost_tweens = {m: set() for m in all_members}
+    has_tweens = {m: False for m in all_members}
+    for i, m1 in enumerate(all_members):
+        if has_tweens[m1]:
+            continue
+        for m2 in all_members[i + 1:]:
+            if has_tweens[m2]:
+                continue
+            corr = np.corrcoef(profiles[m1], profiles[m2])[1, 0]
+            if corr > 0.999:
+                if m1 not in twins:
+                    twins[m1] = set()
+                twins[m1].add(m2)
+                has_tweens[m1] = has_tweens[m2] = True
+            elif corr > almost_twins_threshold:
+                almost_tweens[m1].add((m2, corr))
+                almost_tweens[m2].add((m1, corr))
+    return twins, almost_tweens, has_tweens
+
+def find_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0):
     """Return statistics on possible bad elements in the data.
 
     Parameters
@@ -37,15 +85,18 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1):
 
     """
     groups_data = deepcopy(groups_data)
+    twins, almost_tweens, has_twins = find_twins(groups_data)
     members_sets = [set(group['members']) for group in groups_data.values()]
     all_members = set().union(*members_sets)
     conserved_members = members_sets[0].intersection(*members_sets)
-    varying_members = sorted(all_members.difference(conserved_members))
+    members_with_twins = set().union(*twins.values())
+    varying_members = sorted(all_members.difference(conserved_members)
+                                        .difference(members_with_twins))
 
     # Build the data
 
     def build_data_and_observed(selected_members, by_group=False):
-        data  = []
+        data = []
         observed = []
         for group_name, group_data in groups_data.items():
             attempts = int(group_data['attempts'])
@@ -65,7 +116,6 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1):
     # LASSO model (gives positive / negative impact)
     data, observed = build_data_and_observed(varying_members)
     regression = linear_model.RidgeCV()
-    # regression = linear_model.LogisticRegressionCV(penalty='l2')
     regression.fit(data, observed)
 
     # ANOVA analysis (for p-values)
@@ -75,7 +125,7 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1):
     # select the most interesting parts
     data_ = zip(selector.pvalues_, regression.coef_, varying_members)
     significant_members = OrderedDict([
-        (name, {'pvalue': pvalue})
+        (name, {'pvalue': pvalue, 'twins': twins.get(name, [])})
         for pvalue, coef, name in sorted(data_)
         if (pvalue < pvalue_threshold) and (coef > 0)
     ])
@@ -86,6 +136,9 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1):
     zipped = zip(regression.coef_, significant_members.items())
     for coef, (name, data_) in zipped:
         data_['effect'] = coef
+    for member in list(significant_members.keys()):
+        if significant_members[member]["effect"] < effect_threshold:
+            significant_members.pop(member)
 
     # Build a classifier to compute a L1 score
     classifier = linear_model.LogisticRegressionCV(penalty='l2')
@@ -98,9 +151,9 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1):
     regression.fit(data, observed)
     predictions = regression.predict(data)
     zipped = zip(groups_data.values(), observed, predictions)
-
+    intercept = min(0.9, max(0.1, regression.intercept_))
     for group_data, obs, pred in zipped:
-        std = binom.std(group_data['attempts'], pred) / group_data['attempts']
+        std = binom.std(group_data['attempts'], intercept) / group_data['attempts']
         group_data['failure_rate'] = obs
         group_data['deviation'] = np.round((obs - pred) / std, decimals=1)
 
