@@ -106,4 +106,4 @@ def analysis_report(analysis_results, outfile, replacements=()):
             saboteurs_found=True
         )
     html = replace_in_text(html, capitalize=True, replacements=replacements)
-    write_report(html, outfile, extra_stylesheets=(STYLESHEET,))
+    return write_report(html, outfile, extra_stylesheets=(STYLESHEET,))

@@ -7,3 +7,5 @@ def test_basics(tmpdir):
     groups_data = csv_to_groups_data(csv_path)
     analysis_results = find_saboteurs(groups_data)
     analysis_report(analysis_results, pdf_path)
+    data = analysis_report(analysis_results, '@memory')
+    assert len(data) > 70000
