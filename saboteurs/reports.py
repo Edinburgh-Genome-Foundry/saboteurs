@@ -86,7 +86,8 @@ def analysis_report(analysis_results, outfile, replacements=()):
       The result of ``saboteurs.find_saboteurs``.
 
     outfile
-      Path to the final PDF file, or file-like object.
+      Path to the final PDF file, or file-like object, or '@memory' to
+      return binary data of the PDF report.
 
     replacements
       A list of the form ``[("text_to_replace", "text_replacing"), ...]``
