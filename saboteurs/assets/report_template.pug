@@ -13,54 +13,60 @@ hr
     This report highlights the members which significantly impair
     the success of groups they belong to.
 
-#significant-members
-  
-h2 Significant members
+if saboteurs_found
+  #significant-members
 
-.ui.raised.segment.significant-stats
-  .ui.tiny.statistic
-    .value {{ "%.02f" % f1_score }}
-    .label F1 Score
-  {{ pdf_tools.dataframe_to_html(members_table, extra_classes=("definition",)) }}
-  
+  h2 Significant members
 
-:markdown
-
-  These members have been selected because they tend to appear in groups that
-  fail more, and be absent of groups that succeed.
-
-  **The p-value** (from an ANOVA test) indicates how statistically significant this
-  pattern is for each selected member. Smaller p-values mean greater
-  significance.
-
-  **The "Effect"** indicates how impactful the member is, i.e. how much the member
-  belonging to a group increases this group's chances of failure, in average.
-  
-  **Twins** indicate other members which appear exactly in the same groups as the
-  significant member. As a consequence, we cannot know if it is this member
-  causing the failures, or one of its twins (or maybe several of them ?).
-
-  **The F1 score**, between 0 and 1 (1 being best) indicates how accurately
-  one could predict the success or failure of a group, simply knowing which of
-  these members are in the group. A low score (below 0.5) indicates that this
-  report hasn't found any significant effect of a group's members on its success
-  rate.
+  .ui.raised.segment.significant-stats
+    .ui.tiny.statistic
+      .value {{ "%.02f" % f1_score }}
+      .label F1 Score
+    {{ pdf_tools.dataframe_to_html(members_table, extra_classes=("definition",)) }}
     
-.page-break    
-:markdown
 
-  ## Were these members appear
+  :markdown
 
-  The next table shows the different groups, from the less to the most
-  successful in average, and which failure-associated members each group
-  contains.
+    These members have been selected because they tend to appear in groups that
+    fail more, and be absent of groups that succeed.
 
-  The "Mystery" column, when featuring two stars or more, indicates groups with
-  a success rate that is not well explained by the presence of these members.
-  This means either that the group was particularly successful while containing
-  failure-associated members, or on the contrary that the group was unsuccessful
-  despite containing no such member. In both cases, this indicates that the
-  group's success was mainly driven by external factors.
+    **The p-value** (from an ANOVA test) indicates how statistically significant this
+    pattern is for each selected member. Smaller p-values mean greater
+    significance.
 
-.table2
-  {{ pdf_tools.dataframe_to_html(groups_table, extra_classes=("definition",)) }}
+    **The "Effect"** indicates how impactful the member is, i.e. how much the member
+    belonging to a group increases this group's chances of failure, in average.
+    
+    **Twins** indicate other members which appear exactly in the same groups as the
+    significant member. As a consequence, we cannot know if it is this member
+    causing the failures, or one of its twins (or maybe several of them ?).
+
+    **The F1 score**, between 0 and 1 (1 being best) indicates how accurately
+    one could predict the success or failure of a group, simply knowing which of
+    these members are in the group. A low score (below 0.5) indicates that this
+    report hasn't found any significant effect of a group's members on its success
+    rate.
+      
+  .page-break    
+  :markdown
+
+    ## Were these members appear
+
+    The next table shows the different groups, from the less to the most
+    successful in average, and which failure-associated members each group
+    contains.
+
+    The "Mystery" column, when featuring two stars or more, indicates groups with
+    a success rate that is not well explained by the presence of these members.
+    This means either that the group was particularly successful while containing
+    failure-associated members, or on the contrary that the group was unsuccessful
+    despite containing no such member. In both cases, this indicates that the
+    group's success was mainly driven by external factors.
+
+  .table2
+    {{ pdf_tools.dataframe_to_html(groups_table, extra_classes=("definition",)) }}
+
+else
+  p.
+    No significant members found. As a report, I feel a bit useless of course,
+    but for you it must be great news... I guess.

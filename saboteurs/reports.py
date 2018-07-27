@@ -91,10 +91,19 @@ def analysis_report(analysis_results, outfile, replacements=()):
     replacements
       A list of the form ``[("text_to_replace", "text_replacing"), ...]``
     """
-    html = saboteurs_pug_to_html(
-        members_table=make_members_table(analysis_results),
-        groups_table=make_groups_table(analysis_results),
-        f1_score=analysis_results['f1_score']
-    )
+    if len(analysis_results['significant_members']) == 0:
+        html = saboteurs_pug_to_html(
+            members_table=None,
+            groups_table=None,
+            f1_score=None,
+            saboteurs_found=False
+        )
+    else:
+        html = saboteurs_pug_to_html(
+            members_table=make_members_table(analysis_results),
+            groups_table=make_groups_table(analysis_results),
+            f1_score=analysis_results['f1_score'],
+            saboteurs_found=True
+        )
     html = replace_in_text(html, capitalize=True, replacements=replacements)
     write_report(html, outfile, extra_stylesheets=(STYLESHEET,))

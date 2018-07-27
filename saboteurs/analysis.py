@@ -71,7 +71,8 @@ def find_twins(groups_data, almost_twins_threshold=0.8):
                 almost_tweens[m2].add((m1, corr))
     return twins, almost_tweens, has_tweens
 
-def find_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0):
+def find_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0,
+                   max_significant_members=10):
     """Return statistics on possible bad elements in the data.
 
     Parameters
@@ -130,6 +131,13 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0):
         if (pvalue < pvalue_threshold) and (coef > 0)
     ])
 
+    if len(significant_members) == 0:
+        return {
+            'groups_data': groups_data,
+            'conserved_members': conserved_members,
+            'varying_members': varying_members,
+            'significant_members': significant_members,
+        }
     # LASSO model (significant parts only)
     data, observed = build_data_and_observed(significant_members)
     regression.fit(data, observed)
@@ -139,6 +147,9 @@ def find_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0):
     for member in list(significant_members.keys()):
         if significant_members[member]["effect"] < effect_threshold:
             significant_members.pop(member)
+
+    # print (significant_members)
+    # significant_members = significant_members[:max_significant_members]
 
     # Build a classifier to compute a L1 score
     classifier = linear_model.LogisticRegressionCV(penalty='l2')
