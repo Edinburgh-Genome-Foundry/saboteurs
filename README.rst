@@ -73,8 +73,8 @@ assuming thare there are at most 2. This is solved as follows with Saboteurs:
     selected_groups = design_test_batch(all_possible_groups, max_saboteurs=2)
     # result:
     # OrderedDict([('group_3', ('A', 'B', 'L')),
-                   ('group_9', ('A', 'E', 'I', 'L')),
-                   ... and more])
+    #              ('group_9', ('A', 'E', 'I', 'L')),
+    #              ... and more])
         
 
 In practice, a group can have different "positions" and a given element can
@@ -100,8 +100,8 @@ using saboteur's utility method ``generate_combinatorial_groups``:
     selected_groups = design_test_batch(possible_groups, max_bad_elements=2)
     # result:
     # OrderedDict([('group_009', ('A', 'D', 'J', 'N')),
-                   ('group_016', ('A', 'E', 'I', 'L')),
-                   ... and 13 other groups])
+    #              ('group_016', ('A', 'E', 'I', 'L')),
+    #              ... and 13 other groups])
 
 Statistical methods
 ~~~~~~~~~~~~~~~~~~~
