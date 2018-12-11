@@ -19,7 +19,7 @@ Usage
 Logical methods
 ~~~~~~~~~~~~~~~
 
-**Identifying bad elements from experimental results**
+**Identifying saboteur elements from experimental results**
 
 Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)*?
 
@@ -55,7 +55,7 @@ unambiguously as saboteurs).
 
 This feature is used to detect
 
-**Designing experiment batches to find bad elements.**
+**Designing experiment batches to find saboteur elements.**
 
 We now assume that among all the possible groups you can form to make teams, you want
 to select a restricted batch of "test groups" so that, when you get the result
@@ -97,7 +97,7 @@ using saboteur's utility method ``generate_combinatorial_groups``:
 
     from saboteurs import (generate_combinatorial_groups, design_test_batch)
     possible_groups = generate_combinatorial_groups(elements_per_position)
-    selected_groups = design_test_batch(possible_groups, max_bad_elements=2)
+    selected_groups = design_test_batch(possible_groups, max_saboteurs=2)
     # result:
     # OrderedDict([('group_009', ('A', 'D', 'J', 'N')),
     #              ('group_016', ('A', 'E', 'I', 'L')),
