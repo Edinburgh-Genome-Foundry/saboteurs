@@ -56,15 +56,14 @@ unambiguously as saboteurs).
 This feature is used to detect
 
 **Designing experiment batches to find saboteur elements.**
-
-We now assume that among all the possible groups you can form to make teams, you want
-to select a restricted batch of "test groups" so that, when you get the result
-of all the groups in the batch, you will be able to identify any saboteur,
-assuming thare there are at most 2. This is solved as follows with Saboteurs:
+Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
+We want to select a batch of "test groups" (from all possible teams) so that when we get the result
+of all these teams (success or failure) we will be able to identify the one or two saboteurs.
+This is solved as follows:
 
 .. code:: python
 
-    from saboteurs import find_logical_saboteurs
+    from saboteurs import design_test_batch
     all_possible_groups = {
         'group_1': ['A', 'B', 'C],
         'group_2': ['A', 'B', 'D', 'E'],
