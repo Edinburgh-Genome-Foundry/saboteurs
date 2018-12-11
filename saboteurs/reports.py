@@ -77,13 +77,13 @@ def replace_in_text(text, replacements, capitalize=True):
     return text
 
 def analysis_report(analysis_results, outfile, replacements=()):
-    """Procude a PDF reports from the results of ``find_saboteurs()``.
+    """Procude a PDF reports from the results of ``find_statistical_saboteurs()``.
 
     Parameters
     ----------
 
     analysis_results
-      The result of ``saboteurs.find_saboteurs``.
+      The result of ``saboteurs.find_statistical_saboteurs``.
 
     outfile
       Path to the final PDF file, or file-like object, or '@memory' to

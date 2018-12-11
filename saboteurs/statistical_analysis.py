@@ -7,7 +7,7 @@ import numpy as np
 from copy import deepcopy
 
 def csv_to_groups_data(csv_path):
-    """Read a CSV to get the data to feed to ``find_saboteurs()``.
+    """Read a CSV to get the data to feed to ``find_statistical_saboteurs()``.
 
     See examples of such a file in the code repository:
 
@@ -71,7 +71,7 @@ def find_twins(groups_data, almost_twins_threshold=0.8):
                 almost_tweens[m2].add((m1, corr))
     return twins, almost_tweens, has_tweens
 
-def find_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0,
+def find_statistical_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0,
                    max_significant_members=10):
     """Return statistics on possible bad elements in the data.
 
