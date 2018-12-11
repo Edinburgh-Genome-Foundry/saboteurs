@@ -21,7 +21,7 @@ Logical methods
 
 **Identifying bad elements from experimental results**
 
-Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)* ?
+Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)*?
 
 ======= ======= =======
 Mission Members Outcome
@@ -32,7 +32,7 @@ Mission Members Outcome
 4       D F G   Failure
 ======= ======= =======
 
-Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **C is a saboteur**. Mission 4 raises suspicion on F on G and while none of them is cleared by another mission, it is impossible to say at this stage if only F or only G or both are a saboteur, so they will be marked as suspicious.
+Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **C is a saboteur**. Meanwhile mission 4 raises **suspicion on F and G**, but while none of them is cleared by another mission, it is impossible to say if only F or only G or both are saboteurs.
 
 The Saboteurs libary has a method ``find_logical_saboteurs`` which allows to do this reasoning many groups with many elements. Here is how you would solve the problem above:
 
@@ -63,6 +63,7 @@ of all the groups in the batch, you will be able to identify any saboteur,
 assuming thare there are at most 2. This is solved as follows with Saboteurs:
 
 .. code:: python
+
     from saboteurs import find_logical_saboteurs
     all_possible_groups = {
         'group_1': ['A', 'B', 'C],
@@ -81,6 +82,7 @@ only fill one of these positions. Consider for instance that there are 4
 possible positions, with respective possible elements lists as follows: 
 
 .. code:: python
+
     elements_per_position = {
         "Position_1": ['A', 'B', 'C'],
         "Position_2": ['D', 'E', 'F', 'G'],
