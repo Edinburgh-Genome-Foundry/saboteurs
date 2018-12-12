@@ -15,4 +15,5 @@ setup(
     keywords="statistics weakest link DNA part validation",
     packages=find_packages(exclude='docs'),
     include_package_data=True,
-    install_requires=["numpy", "pandas", "scipy", "sklearn", "pdf_reports"])
+    install_requires=["numpy", "pandas", "scipy", "sklearn", "pdf_reports",
+                      "matplotlib"])
