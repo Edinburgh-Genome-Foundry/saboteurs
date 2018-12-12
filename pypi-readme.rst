@@ -1,7 +1,13 @@
 Saboteurs
 ==========
 
-Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data. It is used at the Edinburgh Genome Foundry to identify compromised samples of genetic parts, based on success statistics from genetic assemblies involving these parts.
+Saboteurs is a Python library to detect bad elements (or *weakest links*)
+from success/failure data. It is used at the Edinburgh Genome Foundry to
+identify compromised samples of genetic parts, based on success statistics
+from genetic assemblies involving these parts.
+
+Saboteurs can also be used to design "test batches" which will allow to easily
+identify bad elements.
 
 Infos
 -----
@@ -10,7 +16,11 @@ Infos
 
 .. code:: bash
 
- pip install saboteurs
+  pip install saboteurs
+
+**Docs**
+
+`<https://edinburgh-genome-foundry.github.io/saboteurs/>`_
 
 **Github Page**
 

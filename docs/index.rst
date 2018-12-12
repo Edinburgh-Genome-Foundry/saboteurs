@@ -1,7 +1,7 @@
 .. raw:: html
 
     <p align="center">
-    <img alt="Saboteurs Logo" title="DNA Chisel" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/saboteurs/master/docs/_static/images/title.png" width="400">
+    <img alt="Primavera Logo" title="Saboteurs Logo" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/saboteurs/master/saboteurs/docs/_static/images/logo.png" width="700">
     <br /><br />
     </p>
 

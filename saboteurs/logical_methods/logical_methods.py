@@ -63,17 +63,18 @@ def design_test_batch(possible_groups, max_saboteurs=1):
         tuple_ for tuple_ in product 
         if len(set(tuple_)) == len(tuple_)
     )
+    
     def all_x_without_ys(group):
         return set(
             tuple_ for tuple_ in all_tuples
             if (tuple_[0] in group)
             and not any((e in group) for e in tuple_[1:])
         )
+    
     x_without_ys_sets = [
         (name, all_x_without_ys(group))
         for name, group in possible_groups.items()
     ]
-    
     selected = minimal_cover(all_tuples, x_without_ys_sets)
     keys = list(possible_groups.keys())
     selected = sorted(selected, key=lambda group: keys.index(group))

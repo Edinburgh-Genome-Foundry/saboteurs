@@ -11,5 +11,5 @@ elements_per_position = {
 possible_groups = generate_combinatorial_groups(elements_per_position,
                                                 prefix='G')
 selected_groups = design_test_batch(possible_groups, max_saboteurs=2)
-raw_data = generate_batch_report(selected_groups, plot_format='png',
-                                 target='design_test_batch_report')
+generate_batch_report(selected_groups, plot_format='png',
+                      target='design_test_batch_report')
