@@ -8,9 +8,6 @@
 Saboteurs
 =========
 
-.. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
-    :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
-
 .. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master
     :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
 .. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
