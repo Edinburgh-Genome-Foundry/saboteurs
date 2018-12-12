@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-def csv_to_groups_data(csv_path):
+def csv_to_groups_data(csv_path=None, csv_string=None):
     """Read a CSV to get the data to feed to ``find_statistical_saboteurs()``
     or ``find_logical_saboteurs()``.
 
@@ -25,9 +25,11 @@ def csv_to_groups_data(csv_path):
       >>>  }
       >>>  "Exp. 2": { etc...
     """
-    with open(csv_path, 'r') as f:
-        lines = [[e.strip() for e in l.split(',') if len(e.strip())]
-                 for l in f.read().split('\n') if len(l)]
+    if csv_string is None:
+         with open(csv_path, 'r') as f:
+             csv_string = f.read()
+    lines = [[e.strip() for e in l.split(',') if len(e.strip())]
+                for l in csv_string.split('\n') if len(l)]
     groups = OrderedDict([])
     if 'result' in lines[0]:
         failed_groups = []
