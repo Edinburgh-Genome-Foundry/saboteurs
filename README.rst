@@ -11,7 +11,17 @@
 
 Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data.
 
-We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to identify defectuous genetic parts early. Sometimes when assembling large fragments of DNA, each with typically 5 to 25 parts, we observe that some assemblies have far fewer successes ("good clones") than some others. We use Saboteurs to identify possible parts which would be causing the damage. This would generally mean that the sample corresponding to these parts has been compromised.
+We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to
+identify defectuous genetic parts early:
+
+- When assembling large fragments of DNA, each with typically 5 to 25 parts, we
+  observe that some assemblies have far fewer successes ("good clones") than
+  some others. We use Saboteurs to identify possible parts which would be
+  causing the damage. This would generally mean that the sample corresponding
+  to these parts has been compromised.
+- Before launching a large batch of assemblies which reuse the same few parts,
+  we use Saboteurs to design a smaller "test batch" of carefully selected
+  assemblies to detect and identify possible bad parts.
 
 Usage
 -----
