@@ -37,7 +37,7 @@ Logical methods
 
 **Identifying saboteur elements from experimental results**
 
-Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)*?
+Assume that a secret organization has a few dozen agents ([A]nna, [B]ob, [C]harlie, [D]olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)*?
 
 ======= ======= =======
 Mission Members Outcome
