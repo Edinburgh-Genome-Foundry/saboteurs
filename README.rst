@@ -19,9 +19,9 @@ Usage
 Logical methods
 ~~~~~~~~~~~~~~~
 
-**Identifying bad elements from experimental results**
+**Identifying saboteur elements from experimental results**
 
-Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)* ?
+Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)*?
 
 ======= ======= =======
 Mission Members Outcome
@@ -32,7 +32,7 @@ Mission Members Outcome
 4       D F G   Failure
 ======= ======= =======
 
-Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **C is a saboteur**. Mission 4 raises suspicion on F on G and while none of them is cleared by another mission, it is impossible to say at this stage if only F or only G or both are a saboteur, so they will be marked as suspicious.
+Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **C is a saboteur**. Meanwhile mission 4 raises **suspicion on F and G**, but while none of them is cleared by another mission, it is impossible to say if only F or only G or both are saboteurs.
 
 The Saboteurs libary has a method ``find_logical_saboteurs`` which allows to do this reasoning many groups with many elements. Here is how you would solve the problem above:
 
@@ -55,15 +55,15 @@ unambiguously as saboteurs).
 
 This feature is used to detect
 
-**Designing experiment batches to find bad elements.**
-
-We now assume that among all the possible groups you can form to make teams, you want
-to select a restricted batch of "test groups" so that, when you get the result
-of all the groups in the batch, you will be able to identify any saboteur,
-assuming thare there are at most 2. This is solved as follows with Saboteurs:
+**Designing experiment batches to find saboteur elements.**
+Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
+We want to select a batch of "test groups" (from all possible teams) so that when we get the result
+of all these teams (success or failure) we will be able to identify the one or two saboteurs.
+This is solved as follows:
 
 .. code:: python
-    from saboteurs import find_logical_saboteurs
+
+    from saboteurs import design_test_batch
     all_possible_groups = {
         'group_1': ['A', 'B', 'C],
         'group_2': ['A', 'B', 'D', 'E'],
@@ -72,8 +72,8 @@ assuming thare there are at most 2. This is solved as follows with Saboteurs:
     selected_groups = design_test_batch(all_possible_groups, max_saboteurs=2)
     # result:
     # OrderedDict([('group_3', ('A', 'B', 'L')),
-                   ('group_9', ('A', 'E', 'I', 'L')),
-                   ... and more])
+    #              ('group_9', ('A', 'E', 'I', 'L')),
+    #              ... and more])
         
 
 In practice, a group can have different "positions" and a given element can
@@ -81,6 +81,7 @@ only fill one of these positions. Consider for instance that there are 4
 possible positions, with respective possible elements lists as follows: 
 
 .. code:: python
+
     elements_per_position = {
         "Position_1": ['A', 'B', 'C'],
         "Position_2": ['D', 'E', 'F', 'G'],
@@ -95,11 +96,11 @@ using saboteur's utility method ``generate_combinatorial_groups``:
 
     from saboteurs import (generate_combinatorial_groups, design_test_batch)
     possible_groups = generate_combinatorial_groups(elements_per_position)
-    selected_groups = design_test_batch(possible_groups, max_bad_elements=2)
+    selected_groups = design_test_batch(possible_groups, max_saboteurs=2)
     # result:
     # OrderedDict([('group_009', ('A', 'D', 'J', 'N')),
-                   ('group_016', ('A', 'E', 'I', 'L')),
-                   ... and 13 other groups])
+    #              ('group_016', ('A', 'E', 'I', 'L')),
+    #              ... and 13 other groups])
 
 Statistical methods
 ~~~~~~~~~~~~~~~~~~~
