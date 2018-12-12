@@ -3,15 +3,14 @@
 Saboteurs Reference manual
 ============================
 
-LabelWriter
-~~~~~~~~~~~~~~
+Logical methods
+~~~~~~~~~~~~~~~~
 
-.. autoclass:: saboteurs.LabelWriter
+.. automodule:: saboteurs.logical_methods
    :members:
 
+Statistical methods
+~~~~~~~~~~~~~~~~~~~
 
-Tools
-~~~~~~
-
-.. automodule:: saboteurs.label_tools
+.. automodule:: saboteurs.statistical_methods
    :members:

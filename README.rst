@@ -53,8 +53,6 @@ failing groups, and ``saboteurs`` is the list of suspicious elements which are
 also the only suspicious element in at least one group (and therefore confirmed
 unambiguously as saboteurs).
 
-This feature is used to detect
-
 **Designing experiment batches to find saboteur elements.**
 Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
 We want to select a batch of "test groups" (from all possible teams) so that when we get the result
@@ -75,6 +73,14 @@ This is solved as follows:
     #              ('group_9', ('A', 'E', 'I', 'L')),
     #              ... and more])
         
+You can get a quick report (CSV file and plot) of the selected groups with
+
+.. code:: python
+
+    generate_batch_report(selected_groups, plot_format='png',
+                          target='design_test_batch_report')
+
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/logical_methods/design_test_batch_reports/groups.png
 
 In practice, a group can have different "positions" and a given element can
 only fill one of these positions. Consider for instance that there are 4
@@ -113,10 +119,10 @@ With the Saboteurs library, you would first put your data in a spreadsheet ``dat
 
   from saboteurs import (csv_to_groups_data,
                          find_statistical_saboteurs,
-                         analysis_report)
+                         statistics_report)
   groups_data = csv_to_groups_data("data.csv")
   analysis_results = find_statistical_saboteurs(groups_data)
-  analysis_report(analysis_results, "report.pdf")
+  statistics_report(analysis_results, "report.pdf")
 
 You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/basic_example/basic_example.pdf>`_ highlighting which members have a significant negative impact on their groups, and where they appear:
 

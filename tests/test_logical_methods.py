@@ -1,7 +1,7 @@
 from saboteurs import (find_logical_saboteurs,
                        generate_combinatorial_groups,
                        design_test_batch,
-                       plot_elements_in_groups)
+                       generate_batch_report)
 
 def test_find_logical_saboteurs():
     groups = {
@@ -24,4 +24,5 @@ def test_design_test_batch():
     possible_groups = generate_combinatorial_groups(elements_per_position)
     selected_groups = design_test_batch(possible_groups, max_saboteurs=2)
     assert len(selected_groups) == 15
-    plot_elements_in_groups(selected_groups)
+    raw_data = generate_batch_report(selected_groups)
+    assert len(raw_data) > 2000

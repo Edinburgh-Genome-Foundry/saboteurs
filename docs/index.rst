@@ -13,143 +13,156 @@ Saboteurs
 
 .. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master
     :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
+.. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
+   :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
+   :alt: Travis CI build status
 
-Saboteurs is a python library to generate labels (typically for printing stickers)
-with barcodes and other niceties
+Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data.
 
-**Some features:**
+We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to identify defectuous genetic parts early. Sometimes when assembling large fragments of DNA, each with typically 5 to 25 parts, we observe that some assemblies have far fewer successes ("good clones") than some others. We use Saboteurs to identify possible parts which would be causing the damage. This would generally mean that the sample corresponding to these parts has been compromised.
 
-- Generates PDF files where each page is a label (compatible with most label printers).
-- Label layout defined by HTML (Jinja) templates and CSS. Supports any paper/margin format !
-- Builtin support for various barcodes, QR-codes, datamatrix, and more (wraps other libraries).
-- Labels data can be provided as list of dicts (easy to generate from spreadsheets).
-- Possibility to print several items per sticker.
+Usage
+-----
 
-.. raw:: html
-    
-    <p align="center">
-    <img src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/saboteurs/master/docs/_static/images/demo_screenshot.png" width="715">
-    <br /><br />
-    </p>
+Logical methods
+~~~~~~~~~~~~~~~
 
-Example
---------
+**Identifying saboteur elements from experimental results**
 
-To generate labels with Saboteurs you first need a HTML/Jinja template, and optionally a style sheet, to define how your labels will look like.
+Assume that a secret organization has a few dozen agents (**A**nna, **B**ob, **C**harlie, **D**olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the *saboteur(s)*?
 
-**HTML item template** (``item_template.html``)
+======= ======= =======
+Mission Members Outcome
+======= ======= =======
+1       A C D   Success
+2       B C E   Failure
+3       A B D   Success
+4       D F G   Failure
+======= ======= =======
 
-Notice the use of ``label_tools`` (Saboteurs's builtin features). The variables ``sample_name`` and ``sample_id`` will be defined at label creation time.
+Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **C is a saboteur**. Meanwhile mission 4 raises **suspicion on F and G**, but while none of them is cleared by another mission, it is impossible to say if only F or only G or both are saboteurs.
 
-.. code:: html
-
-    <img src="{{label_tools.qr_code(sample_id)}}"/>
-    <span class='label'>
-        {{ sample_name }} <br/>
-        Made with ❤ @ EGF <br/>
-        🗓 {{ label_tools.now() }}
-    </span>
-
-**CSS stylesheet** (``style.css``)
-
-Notice the CSS ``@page`` attributes which allows you to adjust the page format to the dimensions of your sticker.
-
-.. code:: css
-
-    @page {
-        width: 27mm;
-        height: 7mm;
-        padding: 0.5mm;
-    }
-    img {
-        height: 6.4mm;
-        display: inline-block;
-        vertical-align: middle;
-        image-rendering: pixelated;
-    }
-    .label {
-        font-family: Verdana;
-        font-weight: bold;
-        vertical-align: middle;
-        display: inline-block;
-        font-size: 7px;
-    }
-
-**Python code**
-
-In your Python script, create a ``LabelWriter`` linked to the two files above,
-and feed it a list of of dicts ("records"), one for each label to print :
-
+The Saboteurs libary has a method ``find_logical_saboteurs`` which allows to do this reasoning many groups with many elements. Here is how you would solve the problem above:
 
 .. code:: python
 
-    from saboteurs import LabelWriter
+    from saboteurs import find_logical_saboteurs
+    groups = {
+        1: ['A', 'C', 'D'],
+        2: ['B', 'C', 'E'],
+        3: ['A', 'B', 'D'],
+        4: ['D', 'F', 'G']
+    }
+    find_logical_saboteurs(groups, failed_groups=[2, 4])
+    # result: {'saboteurs': ['E'], 'suspicious': ['G', 'F']}
 
-    label_writer = LabelWriter("item_template.html",
-                               default_stylesheets=("style.css",))
-    records= [
-        dict(sample_id="s01", sample_name="Sample 1"),
-        dict(sample_id="s02", sample_name="Sample 2")
-    ]
+In the result, ``suspicious`` is the list of all elements which only appear in
+failing groups, and ``saboteurs`` is the list of suspicious elements which are
+also the only suspicious element in at least one group (and therefore confirmed
+unambiguously as saboteurs).
 
-    label_writer.write_labels(records, target='qrcode_and_label.pdf')
+**Designing experiment batches to find saboteur elements.**
+Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
+We want to select a batch of "test groups" (from all possible teams) so that when we get the result
+of all these teams (success or failure) we will be able to identify the one or two saboteurs.
+This is solved as follows:
 
-And voila !
+.. code:: python
 
-.. raw:: html
+    from saboteurs import design_test_batch
+    all_possible_groups = {
+        'group_1': ['A', 'B', 'C],
+        'group_2': ['A', 'B', 'D', 'E'],
+        ... and many more
+    }
+    selected_groups = design_test_batch(all_possible_groups, max_saboteurs=2)
+    # result:
+    # OrderedDict([('group_3', ('A', 'B', 'L')),
+    #              ('group_9', ('A', 'E', 'I', 'L')),
+    #              ... and more])
+        
+You can get a quick report (CSV file and plot) of the selected groups with
 
-    <p align="center">
-    <img alt="Saboteurs Logo" title="DNA Chisel" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/saboteurs/master/examples/qrcode_and_date/screenshot.png" width="300">
-    <br /><br />
-    </p>
+.. code:: python
 
-Other examples
---------------
+    generate_batch_report(selected_groups, plot_format='png',
+                          target='design_test_batch_report')
 
-- `Example with a barcode and a dynamically generated picture <https://github.com/Edinburgh-Genome-Foundry/saboteurs/tree/master/examples/barcode_and_dynamic_picture>`_
-- `Ugly example with a logo and a datamatrix <https://github.com/Edinburgh-Genome-Foundry/saboteurs/blob/master/examples/logo_and_datamatrix>`_
-- `Example with date and QR code (sources of the example above) <https://github.com/Edinburgh-Genome-Foundry/saboteurs/blob/master/examples/qrcode_and_date>`_
-- `Example where the label data is read from spreadsheets <https://github.com/Edinburgh-Genome-Foundry/saboteurs/blob/master/examples/labels_from_spreadsheet>`_
-- `Example where several items are printed on each page/sticker <https://github.com/Edinburgh-Genome-Foundry/saboteurs/tree/master/examples/several_items_per_page>`_
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/logical_methods/design_test_batch_reports/groups.png
 
-Documentation
+In practice, a group can have different "positions" and a given element can
+only fill one of these positions. Consider for instance that there are 4
+possible positions, with respective possible elements lists as follows: 
+
+.. code:: python
+
+    elements_per_position = {
+        "Position_1": ['A', 'B', 'C'],
+        "Position_2": ['D', 'E', 'F', 'G'],
+        "Position_3": ['H', 'I', 'J', 'K'],
+        "Position_4": ['L', 'M', 'N'],
+    }
+
+In that case there are 3x4x4x3=144 possible combinations, which can be generated
+using saboteur's utility method ``generate_combinatorial_groups``:
+
+.. code:: python
+
+    from saboteurs import (generate_combinatorial_groups, design_test_batch)
+    possible_groups = generate_combinatorial_groups(elements_per_position)
+    selected_groups = design_test_batch(possible_groups, max_saboteurs=2)
+    # result:
+    # OrderedDict([('group_009', ('A', 'D', 'J', 'N')),
+    #              ('group_016', ('A', 'E', 'I', 'L')),
+    #              ... and 13 other groups])
+
+Statistical methods
+~~~~~~~~~~~~~~~~~~~
+
+**Example 1:** assume that a secret organization has a few dozen agents (Anna, Bob, Charlie, etc.). Regularly, the organization puts together a group (Anna and David and Peggy) and sends that group to missions, some of which will be successful, some of which will fail. After a large number of missions, looking at the results of each group, you may ask: are there some agents which tend to lower the chances of success of the groups they are part of ?
+
+With the Saboteurs library, you would first put your data in a spreadsheet ``data.csv`` like `this one <https://github.com/Edinburgh-Genome-Foundry/saboteurs/blob/master/examples/basic_example/basic_example.csv>`_ then run the following script:
+
+.. code:: python
+
+  from saboteurs import (csv_to_groups_data,
+                         find_statistical_saboteurs,
+                         statistics_report)
+  groups_data = csv_to_groups_data("data.csv")
+  analysis_results = find_statistical_saboteurs(groups_data)
+  statistics_report(analysis_results, "report.pdf")
+
+You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/basic_example/basic_example.pdf>`_ highlighting which members have a significant negative impact on their groups, and where they appear:
+
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/screenshot.png
+
+Installation
 -------------
 
-In progress. See examples and source code in the mean time.
+You can install Saboteurs through PIP
+
+.. code::
+
+    sudo pip install saboteurs
+
+Alternatively, you can unzip the sources in a folder and type
+
+.. code::
+
+    sudo python setup.py install
 
 License = MIT
 --------------
 
-DnaChisel is an open-source software originally written at the `Edinburgh Genome Foundry
-<https://edinburgh-genome-foundry.github.io/home.html>`_ by `Zulko <https://github.com/Zulko>`_
-and `released on Github <https://github.com/Edinburgh-Genome-Foundry/saboteurs>`_ under the MIT licence (¢ Edinburg Genome Foundry). Everyone is welcome to contribute !
+Primavera is an open-source software originally written at the Edinburgh Genome Foundry by `Zulko <https://github.com/Zulko>`_ and `released on Github <https://github.com/Edinburgh-Genome-Foundry/Primavera>`_ under the MIT licence (¢ Edinburg Genome Foundry). Everyone is welcome to contribute !
 
 More biology software
 -----------------------
 
 .. image:: https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png
-  :target: https://edinburgh-genome-foundry.github.io/
+ :target: https://edinburgh-genome-foundry.github.io/
 
-Saboteurs was originally written to print labels for biological samples and is part of the `EGF Codons <https://edinburgh-genome-foundry.github.io/>`_
-synthetic biology software suite for DNA design, manufacturing and validation.
-
-
-.. raw:: html
-    
-     <a href="https://twitter.com/share" class="twitter-share-button"
-     data-text="Saboteurs - Python library to create labels/stickers from HTML templates" data-size="large" data-hashtags="Python PDF">Tweet
-     </a>
-     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-     if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-     fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-     </script>
-     <iframe src="http://ghbtns.com/github-btn.html?user=Edinburgh-Genome-Foundry&repo=saboteurs&type=watch&count=true&size=large"
-     allowtransparency="true" frameborder="0" scrolling="0" width="152px" height="30px" margin-bottom="30px"></iframe>
-
-.. raw:: html
-  
-    <a href="https://github.com/Edinburgh-Genome-Foundry/saboteurs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-
+Saboteurs is part of the `EGF Codons <https://edinburgh-genome-foundry.github.io/>`_ synthetic biology software suite for DNA design, manufacturing and validation.
 
 
 .. toctree::

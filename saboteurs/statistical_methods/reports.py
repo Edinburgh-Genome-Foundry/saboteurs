@@ -6,7 +6,7 @@ import pandas
 import numpy as np
 from pdf_reports import pug_to_html, write_report
 
-from .version import __version__
+from ..version import __version__
 
 THIS_PATH = os.path.dirname(os.path.realpath(__file__))
 STYLESHEET = os.path.join(THIS_PATH, 'assets', 'report_style.css')
@@ -76,7 +76,7 @@ def replace_in_text(text, replacements, capitalize=True):
         text = text.replace(target, replacement)
     return text
 
-def analysis_report(analysis_results, outfile, replacements=()):
+def statistics_report(analysis_results, outfile, replacements=()):
     """Procude a PDF reports from the results of ``find_statistical_saboteurs()``.
 
     Parameters

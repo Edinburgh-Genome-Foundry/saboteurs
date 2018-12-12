@@ -1,90 +1,8 @@
 from collections import OrderedDict
 import itertools
-import matplotlib.pyplot as plt
 import numpy as np
+from .minimal_cover import minimal_cover
 
-def minimal_cover(elements_set, subsets, max_subsets=None, heuristic='default',
-                  selected=(), depth=0):
-    """Generic method to find minimal subset covers.
-
-    Parameters
-    ----------
-    elements_set
-      The set of all ements to cover
-
-    subsets
-      A list of (name, subset)
-
-    max_subsets
-      Maximal number of subsets allowed
-
-    heuristic
-      A function ``((name, subset), selected) => value`` where ``name`` is the
-      name of a subset, ``subset`` is what remains of the subset at this stage,
-      ``selected`` is a list of already-selected subset names.
-
-    selected
-      (Recursion parameter, do not use.) Already-selected elements
-
-    depth
-      (Recursion parameter, do not use.). Depth of the recursion
-
-    Returns
-    -------
-
-      None if no solution was found, else a collection of [(name, subset)...]
-      in the order in which the subsets
-    """
-
-
-    if len(elements_set) == 0:
-        return []
-    if max_subsets == 0:
-        return None
-
-    if depth == 0:
-        full_set = set().union(*[subset for name, subset in subsets])
-        if full_set != elements_set:
-            return None
-
-    subsets = [(n, s) for (n, s) in subsets if len(s)]
-
-    def sorting_heuristic(named_subset):
-        name, subset = named_subset
-        if (heuristic == 'default'):
-            return len(subset)
-        else:
-            return heuristic(named_subset, selected)
-
-    ordered_subsets = sorted(subsets, key=sorting_heuristic)
-
-    while len(ordered_subsets):
-        if max_subsets is not None:
-            critical_subset_length = len(elements_set) / max_subsets
-            max_len = max(len(s) for name, s in ordered_subsets)
-            if max_len < critical_subset_length:
-                return None
-        name, subset = ordered_subsets.pop()
-        new_elements_set = elements_set.difference(subset)
-        new_subsets = [
-            (name_, sub.difference(subset))
-            for (name_, sub) in ordered_subsets
-        ]
-        new_max_subsets = None if (max_subsets is None) else max_subsets - 1
-        result = minimal_cover(new_elements_set, new_subsets,
-                               heuristic=heuristic,
-                               selected=list(selected) + [subset],
-                               max_subsets=new_max_subsets,
-                               depth=depth + 1)
-        if result is not None:
-            return result + [name]
-        ordered_subsets = [
-            subset_
-            for (subset_, (new_name, new_subset)) in zip(ordered_subsets,
-                                                         new_subsets)
-            if len(new_subset) != 0
-        ]
-    return None
 
 def generate_combinatorial_groups(elements_per_position, prefix='group_'):
     """Generate all possibilities from a combinatorial design.
@@ -109,7 +27,7 @@ def generate_combinatorial_groups(elements_per_position, prefix='group_'):
     groups = list(itertools.product(*elements_per_position))
     n_zeros = int(np.log10(len(groups))) + 1
     return OrderedDict([
-        ('group_' + str(i + 1).zfill(n_zeros), group)
+        (prefix + str(i + 1).zfill(n_zeros), group)
         for i, group in enumerate(groups)
     ])
 
@@ -188,37 +106,6 @@ def _groups_fail_table(groups):
         (element, [(element in group) for group in groups])
         for element in all_elements
     ])
-
-
-def plot_elements_in_groups(groups, ax=None):
-    """Plot a diagram of all groups and the elements they contain.
-
-    The ``groups`` parameter is a dict {group_name: [elements in the group]}.
-    The ax is a Matplotlib Ax object on which to plot. If none is provided a
-    new ax will be created and returned at the end.
-    """
-    groups = OrderedDict(groups.items())
-    
-    fail_table = _groups_fail_table(groups)
-    array = np.array(list(fail_table.values()))
-    lines, cols = len(array), len(array[0])
-
-    if ax is None:
-        _, ax = plt.subplots(1)
-    ax.imshow(array, cmap='Purples')
-    ax.set_aspect('equal')
-    for y in range(lines):
-        ax.axhline(y + .5, c='white')
-    ax.set_yticks(range(lines))
-    ax.set_yticklabels(fail_table.keys())
-    for x in range(cols):
-        ax.axvline(x + .5, c='white')
-    ax.set_xticks(range(cols))
-    ax.set_xticklabels(groups, rotation=90)
-    ax.set_xlim(-.5, cols - .5)
-    ax.set_ylim(-.5, lines - .5)
-    ax.set_aspect('equal')
-    return ax
 
 def find_logical_saboteurs(groups, failed_groups):
     """Identify bad and suspicious elements from groups failure data
