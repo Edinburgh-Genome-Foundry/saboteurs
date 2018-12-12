@@ -80,7 +80,7 @@ You can get a quick report (CSV file and plot) of the selected groups with
     generate_batch_report(selected_groups, plot_format='png',
                           target='design_test_batch_report')
 
-.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/logical_methods/design_test_batch_reports/groups.png
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/logical_methods/design_test_batch_report/groups.png
 
 In practice, a group can have different "positions" and a given element can
 only fill one of these positions. Consider for instance that there are 4
