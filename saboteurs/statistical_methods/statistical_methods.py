@@ -1,4 +1,3 @@
-import pandas
 from scipy.stats import binom
 from collections import OrderedDict
 from sklearn import linear_model, metrics
@@ -6,37 +5,7 @@ from sklearn.feature_selection import SelectFpr, f_classif
 import numpy as np
 from copy import deepcopy
 
-def csv_to_groups_data(csv_path):
-    """Read a CSV to get the data to feed to ``find_statistical_saboteurs()``.
-
-    See examples of such a file in the code repository:
-
-    https://github.com/Edinburgh-Genome-Foundry/saboteurs/
-
-    Returns
-    -------
-    group_data
-      A dict of the form
-      
-      >>> {"Exp. 1": {
-      >>>      exp_id: "Exp. 1",
-      >>>     attempts: 7,
-      >>>     failures: 10,
-      >>>     members: ["Alice", "Bob"]}
-      >>>  }
-      >>>  "Exp. 2": { etc...
-    """
-    dataframe = pandas.read_csv(csv_path)
-    dataframe.columns = ['id', 'attempts', 'failures', 'members']
-    groups_data = OrderedDict([
-        (d['id'], d)
-        for d in dataframe.to_dict(orient='records')
-    ])
-    for d in groups_data.values():
-        d['members'] = d['members'].split(',')
-    return groups_data
-
-def find_twins(groups_data, almost_twins_threshold=0.8):
+def _find_twins(groups_data, almost_twins_threshold=0.8):
     groups_members_list = [data["members"] for data in groups_data.values()]
     all_members = set([
         member for l in groups_members_list
@@ -87,7 +56,7 @@ def find_statistical_saboteurs(groups_data, pvalue_threshold=0.1, effect_thresho
 
     """
     groups_data = deepcopy(groups_data)
-    twins, almost_tweens, has_twins = find_twins(groups_data)
+    twins, almost_tweens, has_twins = _find_twins(groups_data)
     members_sets = [set(group['members']) for group in groups_data.values()]
     all_members = set().union(*members_sets)
     conserved_members = members_sets[0].intersection(*members_sets)

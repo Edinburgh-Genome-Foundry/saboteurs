@@ -1,6 +1,8 @@
+import os
 from saboteurs import (find_logical_saboteurs,
                        generate_combinatorial_groups,
                        design_test_batch,
+                       csv_to_groups_data,
                        generate_batch_report)
 
 def test_find_logical_saboteurs():
@@ -11,6 +13,13 @@ def test_find_logical_saboteurs():
         4: ['D', 'F', 'G']
     }
     result = find_logical_saboteurs(groups, failed_groups=[2, 4])
+    assert result['saboteurs'] == ['E']
+    assert sorted(result['suspicious']) == ['F', 'G']
+
+def test_find_logical_saboteurs_from_csv():
+    csv_path = os.path.join('tests', 'data', "logical.csv")
+    groups, failed_groups = csv_to_groups_data(csv_path)
+    result = find_logical_saboteurs(groups, failed_groups=failed_groups)
     assert result['saboteurs'] == ['E']
     assert sorted(result['suspicious']) == ['F', 'G']
 
