@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Saboteurs &mdash; saboteurs 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/css/main.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="saboteurs 0.1.0 documentation" href="#"/>
+        <link rel="next" title="Saboteurs - Reference manual" href="ref.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> saboteurs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Saboteurs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ref.html">Saboteurs - Reference manual</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">saboteurs</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Saboteurs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p align="center">
+<img alt="Primavera Logo" title="Saboteurs Logo" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/saboteurs/master/docs/_static/images/logo.png" width="700">
+<br /><br />
+</p><div class="section" id="saboteurs">
+<h1>Saboteurs<a class="headerlink" href="#saboteurs" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master"><img alt="https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master" src="https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs"><img alt="Travis CI build status" src="https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master" /></a>
+<p>Saboteurs is a Python library to detect bad elements (or <em>weakest links</em>) from success/failure data.</p>
+<p>We use it at the <a class="reference external" href="http://genomefoundry.org/">Edinburgh Genome Foundry</a> to
+identify defectuous genetic parts early:</p>
+<ul class="simple">
+<li>When assembling large fragments of DNA, each with typically 5 to 25 parts, we
+observe that some assemblies have far fewer successes (“good clones”) than
+some others. We use Saboteurs to identify possible parts which would be
+causing the damage. This would generally mean that the sample corresponding
+to these parts has been compromised.</li>
+<li>Before launching a large batch of assemblies which reuse the same few parts,
+we use Saboteurs to design a smaller “test batch” of carefully selected
+assemblies to detect and identify possible bad parts.</li>
+</ul>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logical-methods">
+<h3>Logical methods<a class="headerlink" href="#logical-methods" title="Permalink to this headline">¶</a></h3>
+<p><strong>Identifying saboteur elements from experimental results</strong></p>
+<p>Assume that a secret organization has a few dozen agents ([A]nna, [B]ob, [C]harlie, [D]olly, etc.). Regularly, the organization puts together a team (e.g. A, C, D) and sends them to a mission, which should succeed unless one of the members is a double-agent who will secretly sabotage the mission. Looking at the table below, can you identify the <em>saboteur(s)</em>?</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Mission</th>
+<th class="head">Members</th>
+<th class="head">Outcome</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>A C D</td>
+<td>Success</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>B C E</td>
+<td>Failure</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>A B D</td>
+<td>Success</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>D F G</td>
+<td>Failure</td>
+</tr>
+</tbody>
+</table>
+<p>Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore <strong>C is a saboteur</strong>. Meanwhile mission 4 raises <strong>suspicion on F and G</strong>, but while none of them is cleared by another mission, it is impossible to say if only F or only G or both are saboteurs.</p>
+<p>The Saboteurs library has a method <code class="docutils literal"><span class="pre">find_logical_saboteurs</span></code> which allows to do this reasoning many groups with many elements. Here is how you would solve the problem above:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">saboteurs</span> <span class="k">import</span> <span class="n">find_logical_saboteurs</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">find_logical_saboteurs</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">failed_groups</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="c1"># result: {&#39;saboteurs&#39;: [&#39;E&#39;], &#39;suspicious&#39;: [&#39;G&#39;, &#39;F&#39;]}</span>
+</pre></div>
+</div>
+<p>In the result, <code class="docutils literal"><span class="pre">suspicious</span></code> is the list of all elements which only appear in
+failing groups, and <code class="docutils literal"><span class="pre">saboteurs</span></code> is the list of suspicious elements which are
+also the only suspicious element in at least one group (and therefore confirmed
+unambiguously as saboteurs).</p>
+<p><strong>Designing experiment batches to find saboteur elements.</strong></p>
+<p>Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
+We want to select a batch of “test groups” (from all possible teams) so that when we get the result
+of all these teams (success or failure) we will be able to identify the one or two saboteurs.
+This is solved as follows:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">saboteurs</span> <span class="k">import</span> <span class="n">design_test_batch</span>
+<span class="n">all_possible_groups</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;group_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C],</span>
+    <span class="s1">&#39;group_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span>
+    <span class="o">...</span> <span class="ow">and</span> <span class="n">many</span> <span class="n">more</span>
+<span class="p">}</span>
+<span class="n">selected_groups</span> <span class="o">=</span> <span class="n">design_test_batch</span><span class="p">(</span><span class="n">all_possible_groups</span><span class="p">,</span> <span class="n">max_saboteurs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># result:</span>
+<span class="c1"># OrderedDict([(&#39;group_3&#39;, (&#39;A&#39;, &#39;B&#39;, &#39;L&#39;)),</span>
+<span class="c1">#              (&#39;group_9&#39;, (&#39;A&#39;, &#39;E&#39;, &#39;I&#39;, &#39;L&#39;)),</span>
+<span class="c1">#              ... and more])</span>
+</pre></div>
+</div>
+<p>You can get a quick report (CSV file and plot) of the selected groups with</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">generate_batch_report</span><span class="p">(</span><span class="n">selected_groups</span><span class="p">,</span> <span class="n">plot_format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
+                      <span class="n">target</span><span class="o">=</span><span class="s1">&#39;design_test_batch_report&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/logical_methods/design_test_batch_report/groups.png" src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/logical_methods/design_test_batch_report/groups.png" />
+<p>In practice, a group can have different “positions” and a given element can
+only fill one of these positions. Consider for instance that there are 4
+possible positions, with respective possible elements lists as follows:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">elements_per_position</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Position_1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;Position_2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;Position_3&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;Position_4&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In that case there are 3x4x4x3=144 possible combinations, which can be generated
+using saboteur’s utility method <code class="docutils literal"><span class="pre">generate_combinatorial_groups</span></code>:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">saboteurs</span> <span class="k">import</span> <span class="p">(</span><span class="n">generate_combinatorial_groups</span><span class="p">,</span> <span class="n">design_test_batch</span><span class="p">)</span>
+<span class="n">possible_groups</span> <span class="o">=</span> <span class="n">generate_combinatorial_groups</span><span class="p">(</span><span class="n">elements_per_position</span><span class="p">)</span>
+<span class="n">selected_groups</span> <span class="o">=</span> <span class="n">design_test_batch</span><span class="p">(</span><span class="n">possible_groups</span><span class="p">,</span> <span class="n">max_saboteurs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># result:</span>
+<span class="c1"># OrderedDict([(&#39;group_009&#39;, (&#39;A&#39;, &#39;D&#39;, &#39;J&#39;, &#39;N&#39;)),</span>
+<span class="c1">#              (&#39;group_016&#39;, (&#39;A&#39;, &#39;E&#39;, &#39;I&#39;, &#39;L&#39;)),</span>
+<span class="c1">#              ... and 13 other groups])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="statistical-methods">
+<h3>Statistical methods<a class="headerlink" href="#statistical-methods" title="Permalink to this headline">¶</a></h3>
+<p><strong>Example 1:</strong> assume that a secret organization has a few dozen agents (Anna, Bob, Charlie, etc.). Regularly, the organization puts together a group (Anna and David and Peggy) and sends that group to missions, some of which will be successful, some of which will fail. After a large number of missions, looking at the results of each group, you may ask: are there some agents which tend to lower the chances of success of the groups they are part of ?</p>
+<p>With the Saboteurs library, you would first put your data in a spreadsheet <code class="docutils literal"><span class="pre">data.csv</span></code> like <a class="reference external" href="https://github.com/Edinburgh-Genome-Foundry/saboteurs/blob/master/examples/basic_example/basic_example.csv">this one</a> then run the following script:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">saboteurs</span> <span class="k">import</span> <span class="p">(</span><span class="n">csv_to_groups_data</span><span class="p">,</span>
+                       <span class="n">find_statistical_saboteurs</span><span class="p">,</span>
+                       <span class="n">statistics_report</span><span class="p">)</span>
+<span class="n">groups_data</span> <span class="o">=</span> <span class="n">csv_to_groups_data</span><span class="p">(</span><span class="s2">&quot;data.csv&quot;</span><span class="p">)</span>
+<span class="n">analysis_results</span> <span class="o">=</span> <span class="n">find_statistical_saboteurs</span><span class="p">(</span><span class="n">groups_data</span><span class="p">)</span>
+<span class="n">statistics_report</span><span class="p">(</span><span class="n">analysis_results</span><span class="p">,</span> <span class="s2">&quot;report.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You obtain the following <a class="reference external" href="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/basic_example/basic_example.pdf">PDF report</a> highlighting which members have a significant negative impact on their groups, and where they appear:</p>
+<img alt="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/screenshot.png" src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/screenshot.png" />
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>You can install Saboteurs through PIP</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">saboteurs</span>
+</pre></div>
+</div>
+<p>Alternatively, you can unzip the sources in a folder and type</p>
+<div class="code highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="license-mit">
+<h2>License = MIT<a class="headerlink" href="#license-mit" title="Permalink to this headline">¶</a></h2>
+<p>Primavera is an open-source software originally written at the Edinburgh Genome Foundry by <a class="reference external" href="https://github.com/Zulko">Zulko</a> and <a class="reference external" href="https://github.com/Edinburgh-Genome-Foundry/Primavera">released on Github</a> under the MIT licence (¢ Edinburg Genome Foundry). Everyone is welcome to contribute !</p>
+</div>
+<div class="section" id="more-biology-software">
+<h2>More biology software<a class="headerlink" href="#more-biology-software" title="Permalink to this headline">¶</a></h2>
+<a class="reference external image-reference" href="https://edinburgh-genome-foundry.github.io/"><img alt="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png" /></a>
+<p>Saboteurs is part of the <a class="reference external" href="https://edinburgh-genome-foundry.github.io/">EGF Codons</a> synthetic biology software suite for DNA design, manufacturing and validation.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ref.html" class="btn btn-neutral float-right" title="Saboteurs - Reference manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Zulko.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
