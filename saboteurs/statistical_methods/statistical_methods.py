@@ -17,6 +17,7 @@ def csv_to_groups_data(csv_path):
     -------
     group_data
       A dict of the form
+      
       >>> {"Exp. 1": {
       >>>      exp_id: "Exp. 1",
       >>>     attempts: 7,

@@ -52,3 +52,4 @@ examples/features/downloaded_data
 
 .cache
 .vscode
+docs/_build

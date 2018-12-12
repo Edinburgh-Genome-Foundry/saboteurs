@@ -1,16 +1,19 @@
 .. _reference:
 
-Saboteurs Reference manual
+Saboteurs - Reference manual
 ============================
 
 Logical methods
 ~~~~~~~~~~~~~~~~
 
-.. automodule:: saboteurs.logical_methods
-   :members:
+.. automethod:: saboteurs.logical_methods.find_logical_saboteurs
+.. automethod:: saboteurs.logical_methods.design_test_batch
+.. automethod:: saboteurs.logical_methods.plot_batch
+.. automethod:: saboteurs.logical_methods.generate_batch_report
 
 Statistical methods
 ~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: saboteurs.statistical_methods
-   :members:
+.. automethod:: saboteurs.statistical_methods.csv_to_groups_data
+.. automethod:: saboteurs.statistical_methods.find_statistical_saboteurs
+.. automethod:: saboteurs.statistical_methods.statistics_report

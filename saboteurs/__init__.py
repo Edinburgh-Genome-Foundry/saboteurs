@@ -1,7 +1,3 @@
-""" dna_sequencing_viewer/__init__.py """
-
-# __all__ = []
-
 from .statistical_methods import (csv_to_groups_data,
                                    find_statistical_saboteurs,
                                    statistics_report)
