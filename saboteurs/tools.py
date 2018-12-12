@@ -42,5 +42,4 @@ def csv_to_groups_data(csv_path):
             (name, attempts, failures), members = line[:3], line[3:]
             groups[name] = dict(id=name, attempts=int(attempts),
                                 failures=int(failures), members=members)
-        print (groups)
         return groups
