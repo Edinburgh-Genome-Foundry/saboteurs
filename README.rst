@@ -9,7 +9,7 @@
    :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
    :alt: Travis CI build status
 .. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master
-:target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
+   :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
 
 
 Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data.
