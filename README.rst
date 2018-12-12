@@ -26,6 +26,8 @@ identify defectuous genetic parts early:
   we use Saboteurs to design a smaller "test batch" of carefully selected
   assemblies to detect and identify possible bad parts.
 
+See `this page <https://edinburgh-genome-foundry.github.io/saboteurs/>`_  for the HTML docs.
+
 Usage
 -----
 
@@ -67,6 +69,7 @@ also the only suspicious element in at least one group (and therefore confirmed
 unambiguously as saboteurs).
 
 **Designing experiment batches to find saboteur elements.**
+
 Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
 We want to select a batch of "test groups" (from all possible teams) so that when we get the result
 of all these teams (success or failure) we will be able to identify the one or two saboteurs.
