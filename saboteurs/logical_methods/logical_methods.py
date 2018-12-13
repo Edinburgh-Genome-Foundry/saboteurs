@@ -67,11 +67,13 @@ def design_test_batch(possible_groups, max_saboteurs=1):
     covering_elements = _minimal_elements_group_coverage(possible_groups)
     lcov = len(covering_elements)
     if lcov <= max_saboteurs:
-        return None, ("Not possible to detect up to %d saboteurs as the"
-                      "following %d elements already cover all constructs: %s."
-                      " Remove these elements from the problem or decrease"
-                      "the max number of saboteurs") % (
-                          max_saboteurs, lcov, ", ".join(covering_elements))
+        return None, (
+            "Not possible to detect up to %d saboteurs, as the following %d "
+            "elements collectively cover all constructs, and therefore all "
+            "constructs would fail at once if these %d elements alone were"
+            "saboteurs:\n\n%s\n\n. Remove these elements from the problem or "
+            " decrease the max number of saboteurs if possible.") % (
+                max_saboteurs, lcov, lcov, ", ".join(covering_elements))
     all_elements = set(
         element
         for elements in possible_groups.values()
