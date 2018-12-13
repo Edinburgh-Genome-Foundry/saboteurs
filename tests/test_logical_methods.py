@@ -31,7 +31,9 @@ def test_design_test_batch():
         "Position_4": ['L', 'M', 'N'],
     }
     possible_groups = generate_combinatorial_groups(elements_per_position)
-    selected_groups = design_test_batch(possible_groups, max_saboteurs=2)
+    selected_groups, error = design_test_batch(possible_groups,
+                                               max_saboteurs=2)
+    assert (error is None)
     assert len(selected_groups) == 15
     raw_data = generate_batch_report(selected_groups)
     assert len(raw_data) > 2000

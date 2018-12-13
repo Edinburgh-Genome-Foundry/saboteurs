@@ -84,7 +84,8 @@ This is solved as follows:
         'group_2': ['A', 'B', 'D', 'E'],
         ... and many more
     }
-    selected_groups = design_test_batch(all_possible_groups, max_saboteurs=2)
+    selected_groups, error = design_test_batch(all_possible_groups,
+                                               max_saboteurs=2)
     # result:
     # OrderedDict([('group_3', ('A', 'B', 'L')),
     #              ('group_9', ('A', 'E', 'I', 'L')),

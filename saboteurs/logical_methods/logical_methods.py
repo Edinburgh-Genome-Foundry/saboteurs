@@ -31,6 +31,15 @@ def generate_combinatorial_groups(elements_per_position, prefix='group_'):
         for i, group in enumerate(groups)
     ])
 
+def _minimal_elements_group_coverage(groups):
+    elements_group_coverage = {}
+    for group_name, elements in groups.items():
+        for element in elements:
+            if element not in elements_group_coverage:
+                elements_group_coverage[element] = set()
+            elements_group_coverage[element].add(group_name)
+    return minimal_cover(set(groups.keys()), elements_group_coverage.items())
+
 def design_test_batch(possible_groups, max_saboteurs=1):
     """Select a subset of the groups that enables to identify bad elements.
 
@@ -46,18 +55,29 @@ def design_test_batch(possible_groups, max_saboteurs=1):
 
     Returns
     -------
-    selected_groups
+    selected_groups, error
       A subset of carefully selected elements of ``possible_groups`` as a dict
       {group: [elements in group]}. The selected groups are such that
       knowing which of them failed or succeeded will be enough information
       to identify all bad elements in the original ``possible_groups`` set.
+      If there is an error, then selected groups is [] and the error is a
+      string explaining what went wrong.
 
     """
+    covering_elements = _minimal_elements_group_coverage(possible_groups)
+    lcov = len(covering_elements)
+    if lcov <= max_saboteurs:
+        return None, ("Not possible to detect up to %d saboteurs as the"
+                      "following %d elements already cover all constructs: %s."
+                      " Remove these elements from the problem or decrease"
+                      "the max number of saboteurs") % (
+                          max_saboteurs, lcov, ", ".join(covering_elements))
     all_elements = set(
         element
         for elements in possible_groups.values()
         for element in elements
     )
+    
     product = itertools.product(*((1 + max_saboteurs) * (all_elements,)))
     all_tuples = set(
         tuple_ for tuple_ in product 
@@ -76,9 +96,11 @@ def design_test_batch(possible_groups, max_saboteurs=1):
         for name, group in possible_groups.items()
     ]
     selected = minimal_cover(all_tuples, x_without_ys_sets)
+    if selected is None:
+        return [], 'No solution found.'
     keys = list(possible_groups.keys())
     selected = sorted(selected, key=lambda group: keys.index(group))
-    return OrderedDict((g, possible_groups[g]) for g in selected)
+    return OrderedDict((g, possible_groups[g]) for g in selected), None
 
 def _groups_fail_table(groups):
     """Returns a dict associating each element to the groups it can fail.
