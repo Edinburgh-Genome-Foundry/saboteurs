@@ -4,6 +4,7 @@
     <img alt="Saboteurs Logo" title="Saboteurs Logo" src="https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/saboteurs/master/docs/_static/images/logo.png" width="700">
     <br /><br />
     </p>
+    
 
 .. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
    :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
@@ -11,8 +12,10 @@
 .. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master
    :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
 
+.. raw:: html
 
-Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data.
+    <h1>Saboteurs</h1>
+Saboteurs is a Python library to detect failure-causing elements from success/failure data.
 
 We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to
 identify defectuous genetic parts early:
@@ -27,6 +30,8 @@ identify defectuous genetic parts early:
   assemblies to detect and identify possible bad parts.
 
 See `this page <https://edinburgh-genome-foundry.github.io/saboteurs/>`_  for the HTML docs.
+
+You can also use Saboteurs online, using `this web app <https://cuba.genomefoundry.org/find_saboteur_parts>`_ for saboteurs detection, or `this other app <https://cuba.genomefoundry.org/design_part_test_batches>`_ for designing test batches.
 
 Usage
 -----
