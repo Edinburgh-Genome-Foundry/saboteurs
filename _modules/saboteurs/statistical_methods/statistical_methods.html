@@ -161,45 +161,14 @@
            <div itemprop="articleBody">
             
   <h1>Source code for saboteurs.statistical_methods.statistical_methods</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">binom</span>
+<span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">binom</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">metrics</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">SelectFpr</span><span class="p">,</span> <span class="n">f_classif</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
 
-<span class="k">def</span> <span class="nf">csv_to_groups_data</span><span class="p">(</span><span class="n">csv_path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read a CSV to get the data to feed to ``find_statistical_saboteurs()``.</span>
-
-<span class="sd">    See examples of such a file in the code repository:</span>
-
-<span class="sd">    https://github.com/Edinburgh-Genome-Foundry/saboteurs/</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    group_data</span>
-<span class="sd">      A dict of the form</span>
-<span class="sd">      </span>
-<span class="sd">      &gt;&gt;&gt; {&quot;Exp. 1&quot;: {</span>
-<span class="sd">      &gt;&gt;&gt;      exp_id: &quot;Exp. 1&quot;,</span>
-<span class="sd">      &gt;&gt;&gt;     attempts: 7,</span>
-<span class="sd">      &gt;&gt;&gt;     failures: 10,</span>
-<span class="sd">      &gt;&gt;&gt;     members: [&quot;Alice&quot;, &quot;Bob&quot;]}</span>
-<span class="sd">      &gt;&gt;&gt;  }</span>
-<span class="sd">      &gt;&gt;&gt;  &quot;Exp. 2&quot;: { etc...</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dataframe</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;attempts&#39;</span><span class="p">,</span> <span class="s1">&#39;failures&#39;</span><span class="p">,</span> <span class="s1">&#39;members&#39;</span><span class="p">]</span>
-    <span class="n">groups_data</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([</span>
-        <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
-    <span class="p">])</span>
-    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">groups_data</span>
-
-<span class="k">def</span> <span class="nf">find_twins</span><span class="p">(</span><span class="n">groups_data</span><span class="p">,</span> <span class="n">almost_twins_threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_find_twins</span><span class="p">(</span><span class="n">groups_data</span><span class="p">,</span> <span class="n">almost_twins_threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
     <span class="n">groups_members_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;members&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
     <span class="n">all_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
         <span class="n">member</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">groups_members_list</span>
@@ -250,7 +219,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">groups_data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">groups_data</span><span class="p">)</span>
-    <span class="n">twins</span><span class="p">,</span> <span class="n">almost_tweens</span><span class="p">,</span> <span class="n">has_twins</span> <span class="o">=</span> <span class="n">find_twins</span><span class="p">(</span><span class="n">groups_data</span><span class="p">)</span>
+    <span class="n">twins</span><span class="p">,</span> <span class="n">almost_tweens</span><span class="p">,</span> <span class="n">has_twins</span> <span class="o">=</span> <span class="n">_find_twins</span><span class="p">(</span><span class="n">groups_data</span><span class="p">)</span>
     <span class="n">members_sets</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
     <span class="n">all_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">members_sets</span><span class="p">)</span>
     <span class="n">conserved_members</span> <span class="o">=</span> <span class="n">members_sets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">members_sets</span><span class="p">)</span>

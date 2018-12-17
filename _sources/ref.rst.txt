@@ -14,6 +14,10 @@ Logical methods
 Statistical methods
 ~~~~~~~~~~~~~~~~~~~
 
-.. automethod:: saboteurs.statistical_methods.csv_to_groups_data
 .. automethod:: saboteurs.statistical_methods.find_statistical_saboteurs
 .. automethod:: saboteurs.statistical_methods.statistics_report
+
+Tools
+~~~~~
+
+.. automethod:: saboteurs.tools.csv_to_groups_data

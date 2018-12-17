@@ -167,7 +167,7 @@
 <h1>Saboteurs<a class="headerlink" href="#saboteurs" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master"><img alt="https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master" src="https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master" /></a>
 <a class="reference external image-reference" href="https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs"><img alt="Travis CI build status" src="https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master" /></a>
-<p>Saboteurs is a Python library to detect bad elements (or <em>weakest links</em>) from success/failure data.</p>
+<p>Saboteurs is a Python library to detect failure-causing elements from success/failure data.</p>
 <p>We use it at the <a class="reference external" href="http://genomefoundry.org/">Edinburgh Genome Foundry</a> to
 identify defectuous genetic parts early:</p>
 <ul class="simple">
@@ -180,6 +180,7 @@ to these parts has been compromised.</li>
 we use Saboteurs to design a smaller “test batch” of carefully selected
 assemblies to detect and identify possible bad parts.</li>
 </ul>
+<p>You can also use Saboteurs online, using <a class="reference external" href="https://cuba.genomefoundry.org/find_saboteur_parts">this web app</a> for saboteurs detection, or <a class="reference external" href="https://cuba.genomefoundry.org/design_part_test_batches">this other app</a> for designing test batches.</p>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="logical-methods">
@@ -245,7 +246,8 @@ This is solved as follows:</p>
     <span class="s1">&#39;group_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">],</span>
     <span class="o">...</span> <span class="ow">and</span> <span class="n">many</span> <span class="n">more</span>
 <span class="p">}</span>
-<span class="n">selected_groups</span> <span class="o">=</span> <span class="n">design_test_batch</span><span class="p">(</span><span class="n">all_possible_groups</span><span class="p">,</span> <span class="n">max_saboteurs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">selected_groups</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">design_test_batch</span><span class="p">(</span><span class="n">all_possible_groups</span><span class="p">,</span>
+                                           <span class="n">max_saboteurs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># result:</span>
 <span class="c1"># OrderedDict([(&#39;group_3&#39;, (&#39;A&#39;, &#39;B&#39;, &#39;L&#39;)),</span>
 <span class="c1">#              (&#39;group_9&#39;, (&#39;A&#39;, &#39;E&#39;, &#39;I&#39;, &#39;L&#39;)),</span>

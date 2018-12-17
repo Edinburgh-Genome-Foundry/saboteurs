@@ -194,6 +194,15 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
     <span class="p">])</span>
 
+<span class="k">def</span> <span class="nf">_minimal_elements_group_coverage</span><span class="p">(</span><span class="n">groups</span><span class="p">):</span>
+    <span class="n">elements_group_coverage</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">element</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">elements_group_coverage</span><span class="p">:</span>
+                <span class="n">elements_group_coverage</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">elements_group_coverage</span><span class="p">[</span><span class="n">element</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">minimal_cover</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">elements_group_coverage</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+
 <span class="k">def</span> <span class="nf">design_test_batch</span><span class="p">(</span><span class="n">possible_groups</span><span class="p">,</span> <span class="n">max_saboteurs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Select a subset of the groups that enables to identify bad elements.</span>
 
@@ -209,18 +218,31 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    selected_groups</span>
+<span class="sd">    selected_groups, error</span>
 <span class="sd">      A subset of carefully selected elements of ``possible_groups`` as a dict</span>
 <span class="sd">      {group: [elements in group]}. The selected groups are such that</span>
 <span class="sd">      knowing which of them failed or succeeded will be enough information</span>
 <span class="sd">      to identify all bad elements in the original ``possible_groups`` set.</span>
+<span class="sd">      If there is an error, then selected groups is [] and the error is a</span>
+<span class="sd">      string explaining what went wrong.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">covering_elements</span> <span class="o">=</span> <span class="n">_minimal_elements_group_coverage</span><span class="p">(</span><span class="n">possible_groups</span><span class="p">)</span>
+    <span class="n">lcov</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">covering_elements</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lcov</span> <span class="o">&lt;=</span> <span class="n">max_saboteurs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;Not possible to detect up to </span><span class="si">%d</span><span class="s2"> saboteurs, as the following </span><span class="si">%d</span><span class="s2"> &quot;</span>
+            <span class="s2">&quot;elements collectively cover all constructs, and therefore all &quot;</span>
+            <span class="s2">&quot;constructs would fail at once if these </span><span class="si">%d</span><span class="s2"> elements alone were&quot;</span>
+            <span class="s2">&quot;saboteurs:</span><span class="se">\n\n</span><span class="si">%s</span><span class="se">\n\n</span><span class="s2">. Remove these elements from the problem or &quot;</span>
+            <span class="s2">&quot; decrease the max number of saboteurs if possible.&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">max_saboteurs</span><span class="p">,</span> <span class="n">lcov</span><span class="p">,</span> <span class="n">lcov</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">covering_elements</span><span class="p">))</span>
     <span class="n">all_elements</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
         <span class="n">element</span>
         <span class="k">for</span> <span class="n">elements</span> <span class="ow">in</span> <span class="n">possible_groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span>
     <span class="p">)</span>
+    
     <span class="n">product</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">max_saboteurs</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">all_elements</span><span class="p">,)))</span>
     <span class="n">all_tuples</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
         <span class="n">tuple_</span> <span class="k">for</span> <span class="n">tuple_</span> <span class="ow">in</span> <span class="n">product</span> 
@@ -239,9 +261,11 @@
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">possible_groups</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
     <span class="p">]</span>
     <span class="n">selected</span> <span class="o">=</span> <span class="n">minimal_cover</span><span class="p">(</span><span class="n">all_tuples</span><span class="p">,</span> <span class="n">x_without_ys_sets</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[],</span> <span class="s1">&#39;No solution found.&#39;</span>
     <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">possible_groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="n">selected</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">selected</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">group</span><span class="p">:</span> <span class="n">keys</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">group</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">possible_groups</span><span class="p">[</span><span class="n">g</span><span class="p">])</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">g</span><span class="p">,</span> <span class="n">possible_groups</span><span class="p">[</span><span class="n">g</span><span class="p">])</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">),</span> <span class="kc">None</span>
 
 <span class="k">def</span> <span class="nf">_groups_fail_table</span><span class="p">(</span><span class="n">groups</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns a dict associating each element to the groups it can fail.</span>
