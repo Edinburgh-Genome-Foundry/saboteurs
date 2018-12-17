@@ -15,6 +15,7 @@
 .. raw:: html
 
     <h1>Saboteurs</h1>
+
 Saboteurs is a Python library to detect failure-causing elements from success/failure data.
 
 We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to

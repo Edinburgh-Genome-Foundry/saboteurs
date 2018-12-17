@@ -15,7 +15,8 @@ Saboteurs
    :alt: Travis CI build status
 
 
-Saboteurs is a Python library to detect bad elements (or *weakest links*) from success/failure data.
+
+Saboteurs is a Python library to detect failure-causing elements from success/failure data.
 
 We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to
 identify defectuous genetic parts early:
@@ -28,6 +29,9 @@ identify defectuous genetic parts early:
 - Before launching a large batch of assemblies which reuse the same few parts,
   we use Saboteurs to design a smaller "test batch" of carefully selected
   assemblies to detect and identify possible bad parts.
+
+You can also use Saboteurs online, using `this web app <https://cuba.genomefoundry.org/find_saboteur_parts>`_ for saboteurs detection, or `this other app <https://cuba.genomefoundry.org/design_part_test_batches>`_ for designing test batches.
+
 
 Usage
 -----

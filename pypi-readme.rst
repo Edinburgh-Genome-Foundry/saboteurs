@@ -34,6 +34,13 @@ Infos
 
 `<https://github.com/Edinburgh-Genome-Foundry/saboteurs>`_
 
+**Web apps:**
+
+`Saboteurs detection <https://cuba.genomefoundry.org/find_saboteur_parts>`_
+
+`Batch design <https://cuba.genomefoundry.org/design_part_test_batches>`_
+
+
 **License:** MIT, Copyright Edinburgh Genome Foundry
 
 More biology software
