@@ -152,9 +152,9 @@ You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundr
 .. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/screenshot.png
 
 Installation
--------------
+------------
 
-You can install Saboteurs through PIP
+You can install Saboteurs through PIP:
 
 .. code::
 
@@ -167,12 +167,12 @@ Alternatively, you can unzip the sources in a folder and type
     sudo python setup.py install
 
 License = MIT
---------------
+-------------
 
-Primavera is an open-source software originally written at the Edinburgh Genome Foundry by `Zulko <https://github.com/Zulko>`_ and `released on Github <https://github.com/Edinburgh-Genome-Foundry/Primavera>`_ under the MIT licence (¢ Edinburg Genome Foundry). Everyone is welcome to contribute !
+Saboteurs is an open-source software originally written at the Edinburgh Genome Foundry by `Zulko <https://github.com/Zulko>`_ and `released on Github <https://github.com/Edinburgh-Genome-Foundry/Primavera>`_ under the MIT licence (Copyright 2017 Edinburgh Genome Foundry). Everyone is welcome to contribute!
 
 More biology software
------------------------
+---------------------
 
 .. image:: https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png
  :target: https://edinburgh-genome-foundry.github.io/

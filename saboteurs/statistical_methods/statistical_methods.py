@@ -5,12 +5,10 @@ from sklearn.feature_selection import SelectFpr, f_classif
 import numpy as np
 from copy import deepcopy
 
+
 def _find_twins(groups_data, almost_twins_threshold=0.8):
     groups_members_list = [data["members"] for data in groups_data.values()]
-    all_members = set([
-        member for l in groups_members_list
-        for member in l
-    ])
+    all_members = set([member for l in groups_members_list for member in l])
     profiles = {
         member: [member in parts_list for parts_list in groups_members_list]
         for member in all_members
@@ -27,7 +25,7 @@ def _find_twins(groups_data, almost_twins_threshold=0.8):
     for i, m1 in enumerate(all_members):
         if has_tweens[m1]:
             continue
-        for m2 in all_members[i + 1:]:
+        for m2 in all_members[i + 1 :]:
             if has_tweens[m2]:
                 continue
             corr = np.corrcoef(profiles[m1], profiles[m2])[1, 0]
@@ -41,28 +39,30 @@ def _find_twins(groups_data, almost_twins_threshold=0.8):
                 almost_tweens[m2].add((m1, corr))
     return twins, almost_tweens, has_tweens
 
-def find_statistical_saboteurs(groups_data, pvalue_threshold=0.1, effect_threshold=0,
-                   max_significant_members=10):
+
+def find_statistical_saboteurs(
+    groups_data, pvalue_threshold=0.1, effect_threshold=0, max_significant_members=10
+):
     """Return statistics on possible bad elements in the data.
 
     Parameters
     ----------
     groups_data
-      Result of ``csv_to_groups_data()``
+      Result of ``csv_to_groups_data()``.
 
     pvalue_threshold
       Only failure-associated elements with a p-value below this threshold
-      will be included in the final statistics
-
+      will be included in the final statistics.
     """
     groups_data = deepcopy(groups_data)
     twins, almost_tweens, has_twins = _find_twins(groups_data)
-    members_sets = [set(group['members']) for group in groups_data.values()]
+    members_sets = [set(group["members"]) for group in groups_data.values()]
     all_members = set().union(*members_sets)
     conserved_members = members_sets[0].intersection(*members_sets)
     members_with_twins = set().union(*twins.values())
-    varying_members = sorted(all_members.difference(conserved_members)
-                                        .difference(members_with_twins))
+    varying_members = sorted(
+        all_members.difference(conserved_members).difference(members_with_twins)
+    )
 
     # Build the data
 
@@ -70,12 +70,9 @@ def find_statistical_saboteurs(groups_data, pvalue_threshold=0.1, effect_thresho
         data = []
         observed = []
         for group_name, group_data in groups_data.items():
-            attempts = int(group_data['attempts'])
-            failures = int(group_data['failures'])
-            vector = [[
-                (mb in group_data['members'])
-                for mb in selected_members
-            ]]
+            attempts = int(group_data["attempts"])
+            failures = int(group_data["failures"])
+            vector = [[(mb in group_data["members"]) for mb in selected_members]]
             if by_group:
                 data += vector
                 observed.append(1.0 * failures / attempts)
@@ -95,25 +92,27 @@ def find_statistical_saboteurs(groups_data, pvalue_threshold=0.1, effect_thresho
 
     # select the most interesting parts
     data_ = zip(selector.pvalues_, regression.coef_, varying_members)
-    significant_members = OrderedDict([
-        (name, {'pvalue': pvalue, 'twins': twins.get(name, [])})
-        for pvalue, coef, name in sorted(data_)
-        if (pvalue < pvalue_threshold) and (coef > 0)
-    ])
+    significant_members = OrderedDict(
+        [
+            (name, {"pvalue": pvalue, "twins": twins.get(name, [])})
+            for pvalue, coef, name in sorted(data_)
+            if (pvalue < pvalue_threshold) and (coef > 0)
+        ]
+    )
 
     if len(significant_members) == 0:
         return {
-            'groups_data': groups_data,
-            'conserved_members': conserved_members,
-            'varying_members': varying_members,
-            'significant_members': significant_members,
+            "groups_data": groups_data,
+            "conserved_members": conserved_members,
+            "varying_members": varying_members,
+            "significant_members": significant_members,
         }
     # LASSO model (significant parts only)
     data, observed = build_data_and_observed(significant_members)
     regression.fit(data, observed)
     zipped = zip(regression.coef_, significant_members.items())
     for coef, (name, data_) in zipped:
-        data_['effect'] = coef
+        data_["effect"] = coef
     for member in list(significant_members.keys()):
         if significant_members[member]["effect"] < effect_threshold:
             significant_members.pop(member)
@@ -122,26 +121,25 @@ def find_statistical_saboteurs(groups_data, pvalue_threshold=0.1, effect_thresho
     # significant_members = significant_members[:max_significant_members]
 
     # Build a classifier to compute a L1 score
-    classifier = linear_model.LogisticRegressionCV(penalty='l2')
+    classifier = linear_model.LogisticRegressionCV(penalty="l2")
     classifier.fit(data, observed)
     f1_score = metrics.f1_score(observed, classifier.predict(data))
 
     # Find constructs which are less explained by the parts:
-    data, observed = build_data_and_observed(significant_members,
-                                             by_group=True)
+    data, observed = build_data_and_observed(significant_members, by_group=True)
     regression.fit(data, observed)
     predictions = regression.predict(data)
     zipped = zip(groups_data.values(), observed, predictions)
     intercept = min(0.9, max(0.1, regression.intercept_))
     for group_data, obs, pred in zipped:
-        std = binom.std(group_data['attempts'], intercept) / group_data['attempts']
-        group_data['failure_rate'] = obs
-        group_data['deviation'] = np.round((obs - pred) / std, decimals=1)
+        std = binom.std(group_data["attempts"], intercept) / group_data["attempts"]
+        group_data["failure_rate"] = obs
+        group_data["deviation"] = np.round((obs - pred) / std, decimals=1)
 
     return {
-        'groups_data': groups_data,
-        'conserved_members': conserved_members,
-        'varying_members': varying_members,
-        'significant_members': significant_members,
-        'f1_score': f1_score
+        "groups_data": groups_data,
+        "conserved_members": conserved_members,
+        "varying_members": varying_members,
+        "significant_members": significant_members,
+        "f1_score": f1_score,
     }
