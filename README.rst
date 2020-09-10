@@ -154,8 +154,8 @@ You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundr
 .. raw:: html
 
     <p align="center">
-    <img src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot1.png" width="450">
-    <img src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot2.png" width="450">
+    <img src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot1.png" width="400">
+    <img src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot2.png" width="400">
     </p>
 
 Installation
