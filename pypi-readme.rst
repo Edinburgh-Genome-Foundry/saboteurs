@@ -1,5 +1,5 @@
 Saboteurs
-==========
+=========
 
 Saboteurs is a Python library to detect bad elements (or *weakest links*)
 from success/failure data. It can also be used to design "test batches" which
@@ -26,11 +26,11 @@ Infos
 
   pip install saboteurs
 
-**Docs**
+**Docs:**
 
 `<https://edinburgh-genome-foundry.github.io/saboteurs/>`_
 
-**Github Page**
+**Github Page:**
 
 `<https://github.com/Edinburgh-Genome-Foundry/saboteurs>`_
 
@@ -44,9 +44,9 @@ Infos
 **License:** MIT, Copyright Edinburgh Genome Foundry
 
 More biology software
------------------------
+---------------------
 
 .. image:: https://raw.githubusercontent.com/Edinburgh-Genome-Foundry/Edinburgh-Genome-Foundry.github.io/master/static/imgs/logos/egf-codon-horizontal.png
  :target: https://edinburgh-genome-foundry.github.io/
 
-Primavera is part of the `EGF Codons <https://edinburgh-genome-foundry.github.io/>`_ synthetic biology software suite for DNA design, manufacturing and validation.
+Saboteurs is part of the `EGF Codons <https://edinburgh-genome-foundry.github.io/>`_ synthetic biology software suite for DNA design, manufacturing and validation.
