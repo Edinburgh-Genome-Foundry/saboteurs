@@ -9,8 +9,10 @@
 .. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
    :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
    :alt: Travis CI build status
+
 .. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master
    :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
+
 
 .. raw:: html
 
@@ -147,9 +149,13 @@ With the Saboteurs library, you would first put your data in a spreadsheet ``dat
   analysis_results = find_statistical_saboteurs(groups_data)
   statistics_report(analysis_results, "report.pdf")
 
-You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/basic_example/basic_example.pdf>`_ highlighting which members have a significant negative impact on their groups, and where they appear:
+You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/examples/statistical_methodsbasic_example/basic_example.pdf>`_ highlighting which members have a significant negative impact on their groups, and where they appear:
 
-.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/screenshot.png
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot1.png
+   :width: 45 %
+
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot2.png
+   :width: 45 %
 
 Installation
 ------------
