@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>saboteurs.statistical_methods.statistical_methods &mdash; saboteurs 0.1.0 documentation</title>
+  <title>saboteurs.statistical_methods.statistical_methods &mdash; saboteurs 0.3.2 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/main.css" type="text/css" />
 
   
   
@@ -17,47 +21,36 @@
   
 
   
-
-  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../../../_static/css/main.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../../genindex.html"/>
-        <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="saboteurs 0.1.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> saboteurs
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> saboteurs
           
 
           
@@ -67,7 +60,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.3.2
               </div>
             
           
@@ -84,6 +77,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -92,7 +86,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Saboteurs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Usage</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -102,13 +96,14 @@
             
           
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">saboteurs</a>
@@ -116,9 +111,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -139,7 +135,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -147,8 +143,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -161,19 +155,17 @@
            <div itemprop="articleBody">
             
   <h1>Source code for saboteurs.statistical_methods.statistical_methods</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">binom</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">metrics</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">SelectFpr</span><span class="p">,</span> <span class="n">f_classif</span>
+<span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">binom</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">metrics</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFpr</span><span class="p">,</span> <span class="n">f_classif</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
 
 <span class="k">def</span> <span class="nf">_find_twins</span><span class="p">(</span><span class="n">groups_data</span><span class="p">,</span> <span class="n">almost_twins_threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
     <span class="n">groups_members_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;members&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-    <span class="n">all_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
-        <span class="n">member</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">groups_members_list</span>
-        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">l</span>
-    <span class="p">])</span>
+    <span class="n">all_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">member</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">groups_members_list</span> <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">l</span><span class="p">])</span>
     <span class="n">profiles</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">member</span><span class="p">:</span> <span class="p">[</span><span class="n">member</span> <span class="ow">in</span> <span class="n">parts_list</span> <span class="k">for</span> <span class="n">parts_list</span> <span class="ow">in</span> <span class="n">groups_members_list</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">all_members</span>
@@ -190,7 +182,7 @@
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_members</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">has_tweens</span><span class="p">[</span><span class="n">m1</span><span class="p">]:</span>
             <span class="k">continue</span>
-        <span class="k">for</span> <span class="n">m2</span> <span class="ow">in</span> <span class="n">all_members</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">for</span> <span class="n">m2</span> <span class="ow">in</span> <span class="n">all_members</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]:</span>
             <span class="k">if</span> <span class="n">has_tweens</span><span class="p">[</span><span class="n">m2</span><span class="p">]:</span>
                 <span class="k">continue</span>
             <span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">profiles</span><span class="p">[</span><span class="n">m1</span><span class="p">],</span> <span class="n">profiles</span><span class="p">[</span><span class="n">m2</span><span class="p">])[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -204,28 +196,30 @@
                 <span class="n">almost_tweens</span><span class="p">[</span><span class="n">m2</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">m1</span><span class="p">,</span> <span class="n">corr</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">twins</span><span class="p">,</span> <span class="n">almost_tweens</span><span class="p">,</span> <span class="n">has_tweens</span>
 
-<span class="k">def</span> <span class="nf">find_statistical_saboteurs</span><span class="p">(</span><span class="n">groups_data</span><span class="p">,</span> <span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">effect_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                   <span class="n">max_significant_members</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">find_statistical_saboteurs</span><span class="p">(</span>
+    <span class="n">groups_data</span><span class="p">,</span> <span class="n">pvalue_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">effect_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_significant_members</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return statistics on possible bad elements in the data.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    groups_data</span>
-<span class="sd">      Result of ``csv_to_groups_data()``</span>
+<span class="sd">      Result of ``csv_to_groups_data()``.</span>
 
 <span class="sd">    pvalue_threshold</span>
 <span class="sd">      Only failure-associated elements with a p-value below this threshold</span>
-<span class="sd">      will be included in the final statistics</span>
-
+<span class="sd">      will be included in the final statistics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">groups_data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">groups_data</span><span class="p">)</span>
     <span class="n">twins</span><span class="p">,</span> <span class="n">almost_tweens</span><span class="p">,</span> <span class="n">has_twins</span> <span class="o">=</span> <span class="n">_find_twins</span><span class="p">(</span><span class="n">groups_data</span><span class="p">)</span>
-    <span class="n">members_sets</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">members_sets</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s2">&quot;members&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
     <span class="n">all_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">members_sets</span><span class="p">)</span>
     <span class="n">conserved_members</span> <span class="o">=</span> <span class="n">members_sets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">members_sets</span><span class="p">)</span>
     <span class="n">members_with_twins</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="n">twins</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="n">varying_members</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">all_members</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">conserved_members</span><span class="p">)</span>
-                                        <span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">members_with_twins</span><span class="p">))</span>
+    <span class="n">varying_members</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">all_members</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">conserved_members</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">members_with_twins</span><span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="c1"># Build the data</span>
 
@@ -233,12 +227,9 @@
         <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">observed</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">group_data</span> <span class="ow">in</span> <span class="n">groups_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">attempts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;attempts&#39;</span><span class="p">])</span>
-            <span class="n">failures</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;failures&#39;</span><span class="p">])</span>
-            <span class="n">vector</span> <span class="o">=</span> <span class="p">[[</span>
-                <span class="p">(</span><span class="n">mb</span> <span class="ow">in</span> <span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">])</span>
-                <span class="k">for</span> <span class="n">mb</span> <span class="ow">in</span> <span class="n">selected_members</span>
-            <span class="p">]]</span>
+            <span class="n">attempts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;attempts&quot;</span><span class="p">])</span>
+            <span class="n">failures</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;failures&quot;</span><span class="p">])</span>
+            <span class="n">vector</span> <span class="o">=</span> <span class="p">[[(</span><span class="n">mb</span> <span class="ow">in</span> <span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;members&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">mb</span> <span class="ow">in</span> <span class="n">selected_members</span><span class="p">]]</span>
             <span class="k">if</span> <span class="n">by_group</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">+=</span> <span class="n">vector</span>
                 <span class="n">observed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">failures</span> <span class="o">/</span> <span class="n">attempts</span><span class="p">)</span>
@@ -258,25 +249,27 @@
 
     <span class="c1"># select the most interesting parts</span>
     <span class="n">data_</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">selector</span><span class="o">.</span><span class="n">pvalues_</span><span class="p">,</span> <span class="n">regression</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">varying_members</span><span class="p">)</span>
-    <span class="n">significant_members</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([</span>
-        <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;pvalue&#39;</span><span class="p">:</span> <span class="n">pvalue</span><span class="p">,</span> <span class="s1">&#39;twins&#39;</span><span class="p">:</span> <span class="n">twins</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[])})</span>
-        <span class="k">for</span> <span class="n">pvalue</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data_</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">pvalue</span> <span class="o">&lt;</span> <span class="n">pvalue_threshold</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">coef</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="p">])</span>
+    <span class="n">significant_members</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;pvalue&quot;</span><span class="p">:</span> <span class="n">pvalue</span><span class="p">,</span> <span class="s2">&quot;twins&quot;</span><span class="p">:</span> <span class="n">twins</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[])})</span>
+            <span class="k">for</span> <span class="n">pvalue</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data_</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pvalue</span> <span class="o">&lt;</span> <span class="n">pvalue_threshold</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">coef</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">significant_members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;groups_data&#39;</span><span class="p">:</span> <span class="n">groups_data</span><span class="p">,</span>
-            <span class="s1">&#39;conserved_members&#39;</span><span class="p">:</span> <span class="n">conserved_members</span><span class="p">,</span>
-            <span class="s1">&#39;varying_members&#39;</span><span class="p">:</span> <span class="n">varying_members</span><span class="p">,</span>
-            <span class="s1">&#39;significant_members&#39;</span><span class="p">:</span> <span class="n">significant_members</span><span class="p">,</span>
+            <span class="s2">&quot;groups_data&quot;</span><span class="p">:</span> <span class="n">groups_data</span><span class="p">,</span>
+            <span class="s2">&quot;conserved_members&quot;</span><span class="p">:</span> <span class="n">conserved_members</span><span class="p">,</span>
+            <span class="s2">&quot;varying_members&quot;</span><span class="p">:</span> <span class="n">varying_members</span><span class="p">,</span>
+            <span class="s2">&quot;significant_members&quot;</span><span class="p">:</span> <span class="n">significant_members</span><span class="p">,</span>
         <span class="p">}</span>
     <span class="c1"># LASSO model (significant parts only)</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">build_data_and_observed</span><span class="p">(</span><span class="n">significant_members</span><span class="p">)</span>
     <span class="n">regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span>
     <span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">regression</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">significant_members</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">:</span>
-        <span class="n">data_</span><span class="p">[</span><span class="s1">&#39;effect&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coef</span>
+        <span class="n">data_</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coef</span>
     <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">significant_members</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="k">if</span> <span class="n">significant_members</span><span class="p">[</span><span class="n">member</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">effect_threshold</span><span class="p">:</span>
             <span class="n">significant_members</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
@@ -285,35 +278,32 @@
     <span class="c1"># significant_members = significant_members[:max_significant_members]</span>
 
     <span class="c1"># Build a classifier to compute a L1 score</span>
-    <span class="n">classifier</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">)</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">)</span>
     <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span>
     <span class="n">f1_score</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">f1_score</span><span class="p">(</span><span class="n">observed</span><span class="p">,</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
     <span class="c1"># Find constructs which are less explained by the parts:</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">build_data_and_observed</span><span class="p">(</span><span class="n">significant_members</span><span class="p">,</span>
-                                             <span class="n">by_group</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">build_data_and_observed</span><span class="p">(</span><span class="n">significant_members</span><span class="p">,</span> <span class="n">by_group</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span>
     <span class="n">predictions</span> <span class="o">=</span> <span class="n">regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">groups_data</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">observed</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
     <span class="n">intercept</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">regression</span><span class="o">.</span><span class="n">intercept_</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">group_data</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">:</span>
-        <span class="n">std</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;attempts&#39;</span><span class="p">],</span> <span class="n">intercept</span><span class="p">)</span> <span class="o">/</span> <span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;attempts&#39;</span><span class="p">]</span>
-        <span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;failure_rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs</span>
-        <span class="n">group_data</span><span class="p">[</span><span class="s1">&#39;deviation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">obs</span> <span class="o">-</span> <span class="n">pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="n">binom</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;attempts&quot;</span><span class="p">],</span> <span class="n">intercept</span><span class="p">)</span> <span class="o">/</span> <span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;attempts&quot;</span><span class="p">]</span>
+        <span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;failure_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs</span>
+        <span class="n">group_data</span><span class="p">[</span><span class="s2">&quot;deviation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">obs</span> <span class="o">-</span> <span class="n">pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;groups_data&#39;</span><span class="p">:</span> <span class="n">groups_data</span><span class="p">,</span>
-        <span class="s1">&#39;conserved_members&#39;</span><span class="p">:</span> <span class="n">conserved_members</span><span class="p">,</span>
-        <span class="s1">&#39;varying_members&#39;</span><span class="p">:</span> <span class="n">varying_members</span><span class="p">,</span>
-        <span class="s1">&#39;significant_members&#39;</span><span class="p">:</span> <span class="n">significant_members</span><span class="p">,</span>
-        <span class="s1">&#39;f1_score&#39;</span><span class="p">:</span> <span class="n">f1_score</span>
+        <span class="s2">&quot;groups_data&quot;</span><span class="p">:</span> <span class="n">groups_data</span><span class="p">,</span>
+        <span class="s2">&quot;conserved_members&quot;</span><span class="p">:</span> <span class="n">conserved_members</span><span class="p">,</span>
+        <span class="s2">&quot;varying_members&quot;</span><span class="p">:</span> <span class="n">varying_members</span><span class="p">,</span>
+        <span class="s2">&quot;significant_members&quot;</span><span class="p">:</span> <span class="n">significant_members</span><span class="p">,</span>
+        <span class="s2">&quot;f1_score&quot;</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">,</span>
     <span class="p">}</span>
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -322,11 +312,19 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Zulko.
+        
+        &copy; Copyright 2018, Zulko
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -338,37 +336,15 @@
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0.1.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

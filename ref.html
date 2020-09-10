@@ -1,15 +1,19 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Saboteurs - Reference manual &mdash; saboteurs 0.1.0 documentation</title>
+  <title>Saboteurs - Reference manual &mdash; saboteurs 0.3.2 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/main.css" type="text/css" />
 
   
   
@@ -17,47 +21,37 @@
   
 
   
-
-  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/css/main.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="saboteurs 0.1.0 documentation" href="index.html"/>
-        <link rel="prev" title="Saboteurs" href="index.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Saboteurs" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="index.html" class="icon icon-home"> saboteurs
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> saboteurs
           
 
           
@@ -67,7 +61,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.3.2
               </div>
             
           
@@ -84,6 +78,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -107,13 +102,14 @@
             
           
         </div>
+        
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">saboteurs</a>
@@ -121,9 +117,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -144,7 +141,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Saboteurs - Reference manual</li>
     
@@ -169,188 +166,147 @@
 <span id="reference"></span><h1>Saboteurs - Reference manual<a class="headerlink" href="#saboteurs-reference-manual" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="logical-methods">
 <h2>Logical methods<a class="headerlink" href="#logical-methods" title="Permalink to this headline">¶</a></h2>
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.logical_methods.find_logical_saboteurs">
-<code class="descclassname">logical_methods.</code><code class="descname">find_logical_saboteurs</code><span class="sig-paren">(</span><em>groups</em>, <em>failed_groups</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.find_logical_saboteurs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">logical_methods.</code><code class="sig-name descname">find_logical_saboteurs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">failed_groups</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.find_logical_saboteurs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identify bad and suspicious elements from groups failure data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>groups</strong></p>
-<blockquote>
-<div><p>A dict {group_name: [elements in that group]}</p>
-</div></blockquote>
-<p><strong>failed_groups</strong></p>
-<blockquote>
-<div><p>A list [group_name_1, group_name_2, …] of the names of all groups that
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>groups</strong></dt><dd><p>A dict {group_name: [elements in that group]}.</p>
+</dd>
+<dt><strong>failed_groups</strong></dt><dd><p>A list [group_name_1, group_name_2, …] of the names of all groups that
 experimentally failed.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">{‘saboteurs’: […], ‘suspicious’: []}</p>
-<blockquote class="last">
-<div><p>Where <code class="docutils literal"><span class="pre">suspicious</span></code> is the list of all elements which do not appear in
-successful group, and <code class="docutils literal"><span class="pre">saboteurs</span></code> is the list of suspicious elements
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>{‘saboteurs’: […], ‘suspicious’: []}</dt><dd><p>Where <code class="docutils literal notranslate"><span class="pre">suspicious</span></code> is the list of all elements which do not appear in
+successful group, and <code class="docutils literal notranslate"><span class="pre">saboteurs</span></code> is the list of suspicious elements
 which are also the only suspicious element in at least one group.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.logical_methods.design_test_batch">
-<code class="descclassname">logical_methods.</code><code class="descname">design_test_batch</code><span class="sig-paren">(</span><em>possible_groups</em>, <em>max_saboteurs=1</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.design_test_batch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a subset of the groups that enables to identify bad elements.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>possible_groups</strong></p>
-<blockquote>
-<div><p>A dict of the form {group_name: [elements in group]}.</p>
-</div></blockquote>
-<p><strong>max_saboteurs</strong></p>
-<blockquote>
-<div><p>The maximum number of potential bad elements among all elements in all
+<code class="sig-prename descclassname">logical_methods.</code><code class="sig-name descname">design_test_batch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">max_saboteurs</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.design_test_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of the groups that enables identification of bad elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>possible_groups</strong></dt><dd><p>A dict of the form {group_name: [elements in group]}.</p>
+</dd>
+<dt><strong>max_saboteurs</strong></dt><dd><p>The maximum number of potential bad elements among all elements in all
 the groups. A bad element is an element which will make every group
-that contains it “fail”</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">selected_groups, error</p>
-<blockquote class="last">
-<div><p>A subset of carefully selected elements of <code class="docutils literal"><span class="pre">possible_groups</span></code> as a dict
+that contains it “fail”.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>selected_groups, error</dt><dd><p>A subset of carefully selected elements of <code class="docutils literal notranslate"><span class="pre">possible_groups</span></code> as a dict
 {group: [elements in group]}. The selected groups are such that
 knowing which of them failed or succeeded will be enough information
-to identify all bad elements in the original <code class="docutils literal"><span class="pre">possible_groups</span></code> set.
+to identify all bad elements in the original <code class="docutils literal notranslate"><span class="pre">possible_groups</span></code> set.
 If there is an error, then selected groups is [] and the error is a
 string explaining what went wrong.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.logical_methods.plot_batch">
-<code class="descclassname">logical_methods.</code><code class="descname">plot_batch</code><span class="sig-paren">(</span><em>groups</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.plot_batch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">logical_methods.</code><code class="sig-name descname">plot_batch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.plot_batch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a diagram of all groups and the elements they contain.</p>
-<p>The <code class="docutils literal"><span class="pre">groups</span></code> parameter is a dict {group_name: [elements in the group]}.
+<p>The <code class="docutils literal notranslate"><span class="pre">groups</span></code> parameter is a dict {group_name: [elements in the group]}.
 The ax is a Matplotlib Ax object on which to plot. If none is provided a
 new ax will be created and returned at the end.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.logical_methods.generate_batch_report">
-<code class="descclassname">logical_methods.</code><code class="descname">generate_batch_report</code><span class="sig-paren">(</span><em>groups</em>, <em>target='&#64;memory'</em>, <em>group_naming='group'</em>, <em>plot_format='pdf'</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.generate_batch_report" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">logical_methods.</code><code class="sig-name descname">generate_batch_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span><span class="o">=</span><span class="default_value">'&#64;memory'</span></em>, <em class="sig-param"><span class="n">group_naming</span><span class="o">=</span><span class="default_value">'group'</span></em>, <em class="sig-param"><span class="n">plot_format</span><span class="o">=</span><span class="default_value">'pdf'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.logical_methods.generate_batch_report" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a report with CSV and plot describing a groups batch.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>groups</strong></p>
-<blockquote>
-<div><p>A (ordered) dict {group_name: [elements in the group]}.</p>
-</div></blockquote>
-<p><strong>target</strong></p>
-<blockquote>
-<div><p>Either path to a folder, or a zip file, or “&#64;memory” to return raw
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>groups</strong></dt><dd><p>A (ordered) dict {group_name: [elements in the group]}.</p>
+</dd>
+<dt><strong>target</strong></dt><dd><p>Either path to a folder, or a zip file, or “&#64;memory” to return raw
 data of a zip file containing the report.</p>
-</div></blockquote>
-<p><strong>group_naming</strong></p>
-<blockquote>
-<div><p>Word that will replace “group” in the report, e.g. “assembly”, “team”,
+</dd>
+<dt><strong>group_naming</strong></dt><dd><p>Word that will replace “group” in the report, e.g. “assembly”, “team”,
 etc.</p>
-</div></blockquote>
-<p><strong>plot_format</strong></p>
-<blockquote class="last">
-<div><p>Formal of the plot (pdf, png, jpeg, etc.)</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt><strong>plot_format</strong></dt><dd><p>Formal of the plot (pdf, png, jpeg, etc).</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="statistical-methods">
 <h2>Statistical methods<a class="headerlink" href="#statistical-methods" title="Permalink to this headline">¶</a></h2>
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.statistical_methods.find_statistical_saboteurs">
-<code class="descclassname">statistical_methods.</code><code class="descname">find_statistical_saboteurs</code><span class="sig-paren">(</span><em>groups_data</em>, <em>pvalue_threshold=0.1</em>, <em>effect_threshold=0</em>, <em>max_significant_members=10</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.statistical_methods.find_statistical_saboteurs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">statistical_methods.</code><code class="sig-name descname">find_statistical_saboteurs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pvalue_threshold</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">effect_threshold</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">max_significant_members</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.statistical_methods.find_statistical_saboteurs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return statistics on possible bad elements in the data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>groups_data</strong></p>
-<blockquote>
-<div><p>Result of <code class="docutils literal"><span class="pre">csv_to_groups_data()</span></code></p>
-</div></blockquote>
-<p><strong>pvalue_threshold</strong></p>
-<blockquote class="last">
-<div><p>Only failure-associated elements with a p-value below this threshold
-will be included in the final statistics</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>groups_data</strong></dt><dd><p>Result of <code class="docutils literal notranslate"><span class="pre">csv_to_groups_data()</span></code>.</p>
+</dd>
+<dt><strong>pvalue_threshold</strong></dt><dd><p>Only failure-associated elements with a p-value below this threshold
+will be included in the final statistics.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.statistical_methods.statistics_report">
-<code class="descclassname">statistical_methods.</code><code class="descname">statistics_report</code><span class="sig-paren">(</span><em>analysis_results</em>, <em>outfile</em>, <em>replacements=()</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.statistical_methods.statistics_report" title="Permalink to this definition">¶</a></dt>
-<dd><p>Procude a PDF reports from the results of <code class="docutils literal"><span class="pre">find_statistical_saboteurs()</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>analysis_results</strong></p>
-<blockquote>
-<div><p>The result of <code class="docutils literal"><span class="pre">saboteurs.find_statistical_saboteurs</span></code>.</p>
-</div></blockquote>
-<p><strong>outfile</strong></p>
-<blockquote>
-<div><p>Path to the final PDF file, or file-like object, or <a class="reference external" href="mailto:'&#37;&#52;&#48;memory">‘<span>&#64;</span>memory</a>’ to
+<code class="sig-prename descclassname">statistical_methods.</code><code class="sig-name descname">statistics_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">outfile</span></em>, <em class="sig-param"><span class="n">replacements</span><span class="o">=</span><span class="default_value">()</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.statistical_methods.statistics_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Procude a PDF reports from the results of <code class="docutils literal notranslate"><span class="pre">find_statistical_saboteurs()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>analysis_results</strong></dt><dd><p>The result of <code class="docutils literal notranslate"><span class="pre">saboteurs.find_statistical_saboteurs</span></code>.</p>
+</dd>
+<dt><strong>outfile</strong></dt><dd><p>Path to the final PDF file, or file-like object, or <a class="reference external" href="mailto:'&#37;&#52;&#48;memory">‘<span>&#64;</span>memory</a>’ to
 return binary data of the PDF report.</p>
-</div></blockquote>
-<p><strong>replacements</strong></p>
-<blockquote class="last">
-<div><p>A list of the form <code class="docutils literal"><span class="pre">[(&quot;text_to_replace&quot;,</span> <span class="pre">&quot;text_replacing&quot;),</span> <span class="pre">...]</span></code></p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt><strong>replacements</strong></dt><dd><p>A list of the form <code class="docutils literal notranslate"><span class="pre">[(&quot;text_to_replace&quot;,</span> <span class="pre">&quot;text_replacing&quot;),</span> <span class="pre">...]</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="tools">
 <h2>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h2>
-<dl class="method">
+<dl class="py method">
 <dt id="saboteurs.tools.csv_to_groups_data">
-<code class="descclassname">tools.</code><code class="descname">csv_to_groups_data</code><span class="sig-paren">(</span><em>csv_path=None</em>, <em>csv_string=None</em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.tools.csv_to_groups_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a CSV to get the data to feed to <code class="docutils literal"><span class="pre">find_statistical_saboteurs()</span></code>
-or <code class="docutils literal"><span class="pre">find_logical_saboteurs()</span></code>.</p>
+<code class="sig-prename descclassname">tools.</code><code class="sig-name descname">csv_to_groups_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">csv_string</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#saboteurs.tools.csv_to_groups_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a CSV to get the data to feed to <code class="docutils literal notranslate"><span class="pre">find_statistical_saboteurs()</span></code>
+or <code class="docutils literal notranslate"><span class="pre">find_logical_saboteurs()</span></code>.</p>
 <p>See examples of such a file in the code repository:</p>
 <p><a class="reference external" href="https://github.com/Edinburgh-Genome-Foundry/saboteurs/">https://github.com/Edinburgh-Genome-Foundry/saboteurs/</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">groups, failed_groups</p>
-<blockquote>
-<div><p>For datasheets for logical saboteur finding.</p>
-</div></blockquote>
-<p>group_data</p>
-<blockquote class="last">
-<div><p>For datasheets for statistical saboteur finding. The data is of the form</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s2">&quot;Exp. 1&quot;</span><span class="p">:</span> <span class="p">{</span>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt>groups, failed_groups</dt><dd><p>For datasheets for logical saboteur finding.</p>
+</dd>
+<dt>group_data</dt><dd><p>For datasheets for statistical saboteur finding. The data is of the form</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s2">&quot;Exp. 1&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">&gt;&gt;&gt; </span>     <span class="n">exp_id</span><span class="p">:</span> <span class="s2">&quot;Exp. 1&quot;</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">attempts</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">failures</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
@@ -359,11 +315,10 @@ or <code class="docutils literal"><span class="pre">find_logical_saboteurs()</sp
 <span class="gp">&gt;&gt;&gt; </span> <span class="s2">&quot;Exp. 2&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="n">etc</span><span class="o">...</span>
 </pre></div>
 </div>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -371,16 +326,14 @@ or <code class="docutils literal"><span class="pre">find_logical_saboteurs()</sp
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="index.html" class="btn btn-neutral" title="Saboteurs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Saboteurs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -389,11 +342,19 @@ or <code class="docutils literal"><span class="pre">find_logical_saboteurs()</sp
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Zulko.
+        
+        &copy; Copyright 2018, Zulko
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -405,37 +366,15 @@ or <code class="docutils literal"><span class="pre">find_logical_saboteurs()</sp
   </div>
   
 
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.1.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>
