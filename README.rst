@@ -55,7 +55,7 @@ Mission Members Outcome
 4       D F G   Failure
 ======= ======= =======
 
-Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **C is a saboteur**. Meanwhile mission 4 raises **suspicion on F and G**, but while none of them is cleared by another mission, it is impossible to say if only F or only G or both are saboteurs.
+Mission 2 raises suspicion on B, C, and E, but Mission 1 clears C, and mission 3 clears B. Therefore **E is a saboteur**. Meanwhile mission 4 raises **suspicion on F and G**, but while none of them is cleared by another mission, it is impossible to say if only F or only G or both are saboteurs.
 
 The Saboteurs library has a method ``find_logical_saboteurs`` which allows to do this reasoning many groups with many elements. Here is how you would solve the problem above:
 
@@ -76,7 +76,7 @@ failing groups, and ``saboteurs`` is the list of suspicious elements which are
 also the only suspicious element in at least one group (and therefore confirmed
 unambiguously as saboteurs).
 
-**Designing experiment batches to find saboteur elements.**
+**Designing experiment batches to find saboteur elements**
 
 Assume that we have a list of agents, among which we suspect might hide one or two saboteurs.
 We want to select a batch of "test groups" (from all possible teams) so that when we get the result
@@ -89,7 +89,7 @@ This is solved as follows:
     all_possible_groups = {
         'group_1': ['A', 'B', 'C],
         'group_2': ['A', 'B', 'D', 'E'],
-        ... and many more
+        # ... and many more
     }
     selected_groups, error = design_test_batch(all_possible_groups,
                                                max_saboteurs=2)
@@ -121,7 +121,7 @@ possible positions, with respective possible elements lists as follows:
     }
 
 In that case there are 3x4x4x3=144 possible combinations, which can be generated
-using saboteur's utility method ``generate_combinatorial_groups``:
+using Saboteur's utility method ``generate_combinatorial_groups``:
 
 .. code:: python
 
@@ -132,6 +132,7 @@ using saboteur's utility method ``generate_combinatorial_groups``:
     # OrderedDict([('group_009', ('A', 'D', 'J', 'N')),
     #              ('group_016', ('A', 'E', 'I', 'L')),
     #              ... and 13 other groups])
+
 
 Statistical methods
 ~~~~~~~~~~~~~~~~~~~
@@ -165,13 +166,13 @@ You can install Saboteurs through PIP:
 
 .. code::
 
-    sudo pip install saboteurs
+    pip install saboteurs
 
 Alternatively, you can unzip the sources in a folder and type
 
 .. code::
 
-    sudo python setup.py install
+    python setup.py install
 
 License = MIT
 -------------
