@@ -6,9 +6,9 @@
     </p>
     
 
-.. image:: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs.svg?branch=master
-   :target: https://travis-ci.org/Edinburgh-Genome-Foundry/saboteurs
-   :alt: Travis CI build status
+.. image:: https://github.com/Edinburgh-Genome-Foundry/saboteurs/actions/workflows/build.yml/badge.svg
+    :target: https://github.com/Edinburgh-Genome-Foundry/saboteurs/actions/workflows/build.yml
+    :alt: GitHub CI build status
 
 .. image:: https://coveralls.io/repos/github/Edinburgh-Genome-Foundry/saboteurs/badge.svg?branch=master
    :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
@@ -168,7 +168,7 @@ You can install Saboteurs through PIP:
 
     pip install saboteurs
 
-Alternatively, you can unzip the sources in a folder and type
+Alternatively, you can unzip the sources in a folder and type:
 
 .. code::
 
