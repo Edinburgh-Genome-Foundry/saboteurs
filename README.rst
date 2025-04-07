@@ -14,10 +14,6 @@
    :target: https://coveralls.io/github/Edinburgh-Genome-Foundry/saboteurs?branch=master
 
 
-.. raw:: html
-
-    <h1>Saboteurs</h1>
-
 Saboteurs is a Python library to detect failure-causing elements from success/failure data.
 
 We use it at the `Edinburgh Genome Foundry <http://genomefoundry.org/>`_ to
@@ -159,25 +155,22 @@ You obtain the following `PDF report <https://github.com/Edinburgh-Genome-Foundr
     <img src="https://github.com/Edinburgh-Genome-Foundry/saboteurs/raw/master/Screenshot2.png" width="400">
     </p>
 
+
 Installation
 ------------
 
-You can install Saboteurs through PIP:
+You can install Saboteurs with PIP:
 
 .. code::
 
     pip install saboteurs
 
-Alternatively, you can unzip the sources in a folder and type:
-
-.. code::
-
-    python setup.py install
 
 License = MIT
 -------------
 
-Saboteurs is an open-source software originally written at the Edinburgh Genome Foundry by `Zulko <https://github.com/Zulko>`_ and `released on Github <https://github.com/Edinburgh-Genome-Foundry/Primavera>`_ under the MIT licence (Copyright 2017 Edinburgh Genome Foundry). Everyone is welcome to contribute!
+Saboteurs is an open-source software originally written at the Edinburgh Genome Foundry by `Zulko <https://github.com/Zulko>`_ and `released on Github <https://github.com/Edinburgh-Genome-Foundry/Primavera>`_ under the MIT licence (Copyright 2017 Edinburgh Genome Foundry, University of Edinburgh). Everyone is welcome to contribute!
+
 
 More biology software
 ---------------------

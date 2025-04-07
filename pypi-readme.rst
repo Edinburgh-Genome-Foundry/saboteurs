@@ -26,13 +26,9 @@ Infos
 
   pip install saboteurs
 
-**Docs:**
+**Docs:** `<https://edinburgh-genome-foundry.github.io/saboteurs/>`_
 
-`<https://edinburgh-genome-foundry.github.io/saboteurs/>`_
-
-**Github Page:**
-
-`<https://github.com/Edinburgh-Genome-Foundry/saboteurs>`_
+**Github page:** `<https://github.com/Edinburgh-Genome-Foundry/saboteurs>`_
 
 **Web apps:**
 
@@ -41,7 +37,10 @@ Infos
 `Batch design <https://cuba.genomefoundry.org/design_part_test_batches>`_
 
 
-**License:** MIT, Copyright Edinburgh Genome Foundry
+**License:** MIT
+
+Copyright 2017 Edinburgh Genome Foundry, University of Edinburgh
+
 
 More biology software
 ---------------------
