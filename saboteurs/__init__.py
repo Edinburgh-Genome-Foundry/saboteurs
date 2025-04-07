@@ -7,3 +7,5 @@ from .logical_methods import (
     generate_combinatorial_groups,
 )
 from .tools import csv_to_groups_data
+
+from .version import __version__

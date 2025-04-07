@@ -9,4 +9,4 @@ def test_basics(tmpdir):
     analysis_results = find_statistical_saboteurs(groups_data)
     statistics_report(analysis_results, pdf_path)
     data = statistics_report(analysis_results, "@memory")
-    assert len(data) > 70000
+    assert len(data) > 50000

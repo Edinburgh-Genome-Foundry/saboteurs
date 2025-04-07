@@ -1,0 +1,30 @@
+[project]
+name = "saboteurs"
+version = "0.3.3"
+license = "MIT"
+authors = [{ name = "Zulko" }]
+description = "Identify agents impairing success across experiments."
+readme = "pypi-readme.rst"
+keywords = ["statistics", "weakest link", "DNA", "part validation"]
+dependencies = [
+  "numpy",
+  "pandas",
+  "scipy",
+  "scikit-learn",
+  "pdf_reports",
+  "matplotlib",
+  "flametree",
+]
+
+[project.urls]
+Homepage = "https://github.com/Edinburgh-Genome-Foundry/saboteurs"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+exclude = ["docs"]
