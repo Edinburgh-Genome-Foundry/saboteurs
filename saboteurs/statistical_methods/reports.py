@@ -25,8 +25,7 @@ def saboteurs_pug_to_html(**context):
 
 
 def make_groups_table(analysis_results):
-    """Return a Pandas dataframe indicating which elements belong to each group.
-    """
+    """Return a Pandas dataframe indicating which elements belong to each group."""
     return pandas.DataFrame.from_records(
         [
             OrderedDict(
@@ -41,9 +40,11 @@ def make_groups_table(analysis_results):
                 + [
                     (
                         "Mystery",
-                        "nan"
-                        if (str(group_data["deviation"]) == "nan")
-                        else "*" * abs(max(0, int(group_data["deviation"]))),
+                        (
+                            "nan"
+                            if (str(group_data["deviation"]) == "nan")
+                            else "*" * abs(max(0, int(group_data["deviation"])))
+                        ),
                     )
                 ]
             )
@@ -53,8 +54,7 @@ def make_groups_table(analysis_results):
 
 
 def make_members_table(analysis_results):
-    """Return a Pandas dataframe with significance/impact of the main elements.
-    """
+    """Return a Pandas dataframe with significance/impact of the main elements."""
     return pandas.DataFrame.from_records(
         [
             OrderedDict(
