@@ -6,16 +6,14 @@ def csv_to_groups_data(csv_path=None, csv_string=None):
     or ``find_logical_saboteurs()``.
 
     See examples of such a file in the code repository:
-
     https://github.com/Edinburgh-Genome-Foundry/saboteurs/
 
     Returns
     -------
-    groups, failed_groups
+    groups, failed_groups : tuple
       For datasheets for logical saboteur finding.
-
-    group_data
-      For datasheets for statistical saboteur finding. The data is of the form
+    group_data : dict
+      For datasheets for statistical saboteur finding. The data is of the form:
 
       >>> {"Exp. 1": {
       >>>      exp_id: "Exp. 1",

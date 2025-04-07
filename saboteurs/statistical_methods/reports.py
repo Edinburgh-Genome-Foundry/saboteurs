@@ -71,22 +71,21 @@ def make_members_table(analysis_results):
 
 
 def replace_in_text(text, replacements, capitalize=True):
-    """Return the text with all the replacements done.
+    """
+    Return the text with all the replacements done.
 
     Parameters
     ----------
-
-    text
-      Some string.
-
-    replacements
-      A list of the form ``[("text_to_replace", "text_replacing"), ...]``.
-
-    capitalize
-      If true, then for each pair ``"text to replace"=>"text replacing"`` in
-      ``replacements``, the couple ``"Text to replace"=>"Text replacing"``
-      is also added (note the capitalization of the first letter).
+    text : str
+        Some string.
+    replacements : list of tuples
+        A list of the form ``[("text_to_replace", "text_replacing"), ...]``.
+    capitalize : bool
+        If true, then for each pair ``"text to replace" => "text replacing"`` in
+        ``replacements``, the couple ``"Text to replace" => "Text replacing"``
+        is also added (note the capitalization of the first letter).
     """
+
     if capitalize:
         replacements = list(replacements) + [
             (string.capwords(target), string.capwords(replacement))
@@ -98,21 +97,19 @@ def replace_in_text(text, replacements, capitalize=True):
 
 
 def statistics_report(analysis_results, outfile, replacements=()):
-    """Procude a PDF reports from the results of ``find_statistical_saboteurs()``.
+    """Produce a PDF report from the results of ``find_statistical_saboteurs()``.
 
     Parameters
     ----------
-
-    analysis_results
-      The result of ``saboteurs.find_statistical_saboteurs``.
-
-    outfile
-      Path to the final PDF file, or file-like object, or '@memory' to
-      return binary data of the PDF report.
-
-    replacements
-      A list of the form ``[("text_to_replace", "text_replacing"), ...]``.
+    analysis_results : dict
+        The result of ``saboteurs.find_statistical_saboteurs``.
+    outfile : str or file-like object
+        Path to the final PDF file, or file-like object, or '@memory' to
+        return binary data of the PDF report.
+    replacements : list of tuples
+        A list of the form ``[("text_to_replace", "text_replacing"), ...]``.
     """
+
     if len(analysis_results["significant_members"]) == 0:
         html = saboteurs_pug_to_html(
             members_table=None, groups_table=None, f1_score=None, saboteurs_found=False

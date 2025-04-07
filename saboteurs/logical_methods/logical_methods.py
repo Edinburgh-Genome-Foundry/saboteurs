@@ -9,18 +9,20 @@ def generate_combinatorial_groups(elements_per_position, prefix="group_"):
 
     Parameters
     ----------
-    elements_per_position
-      A dict {position_name: [elements at this position]}
-    prefix
-      Prefix to generate names for the generated groups, which will be of the
-      form prefix_001, prefix_002, etc.
+    elements_per_position : dict
+        A dictionary where the key is 'position_name' and the value
+        is a list of elements at this position.
+    prefix : str
+        Prefix to generate names for the generated groups,
+        which will be of the form prefix_001, prefix_002, etc.
 
     Returns
     -------
-      groups
-        An ordered dict {group_001: [e1, e2, e3, e4], group_002: [...] etc.}
-        where each group contains exactly one element from each position, and
-        all possible combinations of elements are there.
+    groups : collections.OrderedDict
+        An ordered dictionary with keys formatted as 'group_001', 'group_002', etc.,
+        each key corresponding to a list of elements, [e1, e2, e3, e4, ...].
+        Each group contains exactly one element from each position,
+        and the groups represent all possible combinations of elements.
     """
     if hasattr(elements_per_position, "values"):
         elements_per_position = list(elements_per_position.values())
@@ -46,24 +48,27 @@ def design_test_batch(possible_groups, max_saboteurs=1):
 
     Parameters
     ----------
-    possible_groups
-      A dict of the form {group_name: [elements in group]}.
-
-    max_saboteurs
-      The maximum number of potential bad elements among all elements in all
-      the groups. A bad element is an element which will make every group
-      that contains it "fail".
+    possible_groups : dict
+        A dictionary where the key is 'group_name' and the value is a list of elements in that group.
+    max_saboteurs : int
+        The maximum number of potential bad elements among all elements in all
+        the groups. A bad element is an element which will make every group
+        that contains it "fail".
 
     Returns
     -------
-    selected_groups, error
-      A subset of carefully selected elements of ``possible_groups`` as a dict
-      {group: [elements in group]}. The selected groups are such that
-      knowing which of them failed or succeeded will be enough information
-      to identify all bad elements in the original ``possible_groups`` set.
-      If there is an error, then selected groups is [] and the error is a
-      string explaining what went wrong.
+    selected_groups, error : tuple
+        A tuple consisting of:
+        - 'selected_groups', a dictionary of carefully selected elements from
+        `possible_groups`, where keys are 'group' and values are [elements in group].
+        The selected groups are such that knowing which of them failed or succeeded
+        will be enough information to identify all bad elements in the original
+        `possible_groups` set.
+        - 'error', a string explaining what went wrong if there is an error in
+        selection, otherwise it is None.
+        If there is an error, then selected groups is an empty list, `[]`.
     """
+
     covering_elements = _minimal_elements_group_coverage(possible_groups)
     lcov = len(covering_elements)
     if lcov <= max_saboteurs:
@@ -104,22 +109,24 @@ def design_test_batch(possible_groups, max_saboteurs=1):
 
 
 def _groups_fail_table(groups):
-    """Returns a dict associating each element to the groups it can fail.
+    """Return a dict associating each element to the groups it can fail.
+
     This function is used both in ``plot_elements_in_group`` and
     ``find_logical_saboteurs``.
 
     Parameters
     ----------
-    groups
-      Ordered dict of the form {group_name: [elements in groups]}.
+    groups : OrderedDict
+        Ordered dict of the form {group_name: [elements in groups]}.
 
     Returns
     -------
-    fail_table
-      A dict {element_name: list[True False False ...]} where list[i] is True
-      if the element is part of the i-th group in the provided ordered
-      dictionary ``groups``.
+    fail_table : dict
+        A dict {element_name: list[True False False ...]} where list[i] is True
+        if the element is part of the i-th group in the provided ordered
+        dictionary ``groups``.
     """
+
     groups = list(groups.values())
     all_elements = []
     for group in groups:
@@ -135,24 +142,25 @@ def _groups_fail_table(groups):
 
 
 def find_logical_saboteurs(groups, failed_groups):
-    """Identify bad and suspicious elements from groups failure data
+    """Identify bad and suspicious elements from groups failure data.
 
     Parameters
     ----------
-    groups
-      A dict {group_name: [elements in that group]}.
-    failed_groups
-      A list [group_name_1, group_name_2, ...] of the names of all groups that
-      experimentally failed.
-
+    groups : dict
+        A dict {group_name: [elements in that group]}.
+    failed_groups : list
+        A list [group_name_1, group_name_2, ...] of the names of all groups that
+        experimentally failed.
 
     Returns
     -------
-    {'saboteurs': [...], 'suspicious': []}
-      Where ``suspicious`` is the list of all elements which do not appear in
-      successful group, and ``saboteurs`` is the list of suspicious elements
-      which are also the only suspicious element in at least one group.
+    dict
+        Returns a dictionary {'saboteurs': [...], 'suspicious': []} where
+        ``suspicious`` is the list of all elements which do not appear in
+        successful groups, and ``saboteurs`` is the list of suspicious elements
+        which are also the only suspicious element in at least one group.
     """
+
     groups = OrderedDict(groups.items())
     failed_groups = set(failed_groups)
     groups_list = np.array(list(groups.keys()))

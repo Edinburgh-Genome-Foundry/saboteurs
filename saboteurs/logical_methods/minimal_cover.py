@@ -4,34 +4,30 @@
 def minimal_cover(
     elements_set, subsets, max_subsets=None, heuristic="default", selected=(), depth=0
 ):
-    """Generic method to find minimal subset covers.
+    """
+    Generic method to find minimal subset covers.
 
     Parameters
     ----------
-    elements_set
-      The set of all elements to cover.
-
-    subsets
-      A list of (name, subset).
-
-    max_subsets
-      Maximal number of subsets allowed.
-
-    heuristic
-      A function ``((name, subset), selected) => value`` where ``name`` is the
-      name of a subset, ``subset`` is what remains of the subset at this stage,
-      ``selected`` is a list of already-selected subset names.
-
-    selected
-      (Recursion parameter, do not use.) Already-selected elements.
-
-    depth
-      (Recursion parameter, do not use.). Depth of the recursion.
+    elements_set : set
+        The set of all elements to cover.
+    subsets : list
+        A list of (name, subset).
+    max_subsets : int
+        Maximal number of subsets allowed.
+    heuristic : function
+        A function ``((name, subset), selected) => value`` where ``name`` is the
+        name of a subset, ``subset`` is what remains of the subset at this stage,
+        ``selected`` is a list of already-selected subset names.
+    selected : list, optional
+        (Recursion parameter, do not use.) Already-selected elements.
+    depth : int, optional
+        (Recursion parameter, do not use.) Depth of the recursion.
 
     Returns
     -------
-
-      None if no solution was found, else a collection of [(name, subset)...].
+    None or list
+        None if no solution is found, otherwise a collection of [(name, subset)...].
     """
 
     if len(elements_set) == 0:

@@ -39,24 +39,22 @@ def plot_batch(groups, ax=None):
 def generate_batch_report(
     groups, target="@memory", group_naming="group", plot_format="pdf"
 ):
-    """Generate a report with CSV and plot describing a groups batch.
+    """
+    Generate a report with CSV and plot describing a groups batch.
 
     Parameters
     ----------
-    groups
-      A (ordered) dict {group_name: [elements in the group]}.
-
-    target
-      Either path to a folder, or a zip file, or "@memory" to return raw
-      data of a zip file containing the report.
-
-    group_naming
-      Word that will replace "group" in the report, e.g. "assembly", "team",
-      etc.
-
-    plot_format
-      Formal of the plot (pdf, png, jpeg, etc).
+    groups : OrderedDict
+        A (ordered) dict {group_name: [elements in the group]}.
+    target : str
+        Either path to a folder, or a zip file, or "@memory" to return raw
+        data of a zip file containing the report.
+    group_naming : str
+        Word that will replace "group" in the report, e.g. "assembly", "team", etc.
+    plot_format : str
+        Format of the plot (pdf, png, jpeg, etc).
     """
+
     root = flametree.file_tree(target)
     csv = ("%s,elements\n" % group_naming) + "\n".join(
         [",".join([group] + list(elements)) for group, elements in groups.items()]
